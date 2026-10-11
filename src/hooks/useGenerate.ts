@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { draftToRequest } from '../state/draft'
 import { useSession } from '../state/session'
+import { clientError } from '../services/ai/types'
 
 export { SLOW_AFTER_MS, TIMEOUT_AFTER_MS } from '../state/generation'
 
@@ -37,8 +38,8 @@ export function useGenerate() {
         type: 'fail',
         requestId: token.requestId,
         error: timedOut
-          ? { code: 'TIMEOUT', message: '시간이 너무 오래 걸렸어요.' }
-          : { code: 'INTERNAL', message: '결과를 만들지 못했어요.' },
+          ? clientError('TIMEOUT', '시간이 너무 오래 걸렸어요.')
+          : clientError('INTERNAL', '결과를 만들지 못했어요.'),
       })
     }
   }, [controller, dispatch, getService, state.input])

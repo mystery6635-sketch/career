@@ -20,3 +20,12 @@ ds-bundle
 # OMC 도구 세션 상태
 .omc/
 **/.omc/
+
+.vercel
+.env*
+
+# Supabase CLI 로컬 상태
+supabase/.temp/
+
+# 페르소나 평가 결과(T103). 가상 페르소나뿐이지만 비용이 드는 산출물이라 저장소에 넣지 않는다.
+tests/eval/out/

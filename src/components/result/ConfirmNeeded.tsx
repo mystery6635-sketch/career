@@ -1,6 +1,6 @@
 import { Fragment } from 'react'
 import { RESULT_PAGE } from '@shared/messages'
-import type { Sentence } from '@shared/types'
+import type { Sentence } from '@shared/schema'
 import { NeedsConfirmBadge } from '../ui/Badge'
 
 // needsConfirmation 문장은 노란 점선 상자 + "? 확인 필요" 배지로 감싼다(design §13.5).

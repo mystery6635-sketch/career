@@ -1,5 +1,5 @@
 import type { StatusVariant } from '@shared/messages'
-import type { ApiErrorCode } from '@shared/types'
+import type { ApiErrorCode } from '@shared/schema'
 
 /** 오류 코드 → 상태 화면(design §14, contracts/generate-api.md 3절). */
 export function errorToVariant(code: ApiErrorCode | undefined): StatusVariant {

@@ -11,12 +11,16 @@
     "typecheck": "tsc -b --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "audit:design": "node scripts/audit-design.mjs",
+    "check:secrets": "node scripts/check-bundle-secrets.mjs",
+    "eval:personas": "node --import ./tests/eval/register.mjs tests/eval/run-personas.ts",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build",
     "build:lib": "vite build -c vite.lib.config.ts && tsc -p tsconfig.lib.json"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.3.0",
     "@fontsource/ibm-plex-sans-kr": "^5.3.0",
+    "@supabase/supabase-js": "^2.117.3",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-router-dom": "^7.18.4",

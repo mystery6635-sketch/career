@@ -1,16 +1,23 @@
 import { INPUT_PAGE } from '@shared/messages'
 import { emptyCareer } from '../../state/draft'
-import type { Career } from '@shared/types'
+import type { Career } from '@shared/schema'
+import { fieldProps } from '../../state/validation'
 import { Input } from '../ui/Input'
 import { NoneChoice } from './NoneChoice'
 import { RepeatableRows } from './RepeatableRows'
 import type { SectionProps } from './BasicInfoSection'
 
-export function CareerSection({ draft, onChange }: SectionProps) {
+export function CareerSection({ draft, onChange, feedback }: SectionProps) {
   return (
     <div className="form-stack">
       <p className="field__hint">{INPUT_PAGE.careerHint}</p>
-      <NoneChoice label={INPUT_PAGE.noCareer} checked={draft.noCareer} onChange={(noCareer) => onChange({ noCareer })}>
+      <NoneChoice
+        label={INPUT_PAGE.noCareer}
+        checked={draft.noCareer}
+        onChange={(noCareer) => onChange({ noCareer })}
+        fieldKey="careers"
+        error={feedback.errors.careers}
+      >
       {({ disabled, disabledReason }) => (
         <RepeatableRows<Career>
           rowLabel={INPUT_PAGE.careerRow}
@@ -25,6 +32,7 @@ export function CareerSection({ draft, onChange }: SectionProps) {
             <div className="form-grid" role="group" aria-label={`${INPUT_PAGE.careerRow} ${i + 1}`}>
               <Input
                 label={INPUT_PAGE.careerFields.jobTitle}
+                {...fieldProps(feedback, `careers.${i}.jobTitle`)}
                 required
                 placeholder={INPUT_PAGE.careerPlaceholders.jobTitle}
                 maxLength={100}
@@ -33,6 +41,7 @@ export function CareerSection({ draft, onChange }: SectionProps) {
               />
               <Input
                 label={INPUT_PAGE.careerFields.industry}
+                {...fieldProps(feedback, `careers.${i}.industry`)}
                 required
                 placeholder={INPUT_PAGE.careerPlaceholders.industry}
                 maxLength={100}
@@ -41,6 +50,7 @@ export function CareerSection({ draft, onChange }: SectionProps) {
               />
               <Input
                 label={INPUT_PAGE.careerFields.period}
+                {...fieldProps(feedback, `careers.${i}.period`)}
                 required
                 placeholder={INPUT_PAGE.careerPlaceholders.period}
                 maxLength={50}

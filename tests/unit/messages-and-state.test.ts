@@ -71,7 +71,7 @@ describe('세션 리듀서 (T036)', () => {
     s = sessionReducer(s, { type: 'success', requestId: 'req-1', result })
     expect(s.regenerated).toBe(false)
     s = sessionReducer(s, { type: 'start', requestId: 'req-2' })
-    const failed = sessionReducer(s, { type: 'fail', requestId: 'req-2', error: { code: 'INTERNAL', message: 'x' } })
+    const failed = sessionReducer(s, { type: 'fail', requestId: 'req-2', error: { code: 'INTERNAL', message: 'x', requestId: 'c_1' } })
     expect(failed.result).toBeNull()
     expect(failed.status).toBe('error')
     const ok = sessionReducer(s, { type: 'success', requestId: 'req-2', result })

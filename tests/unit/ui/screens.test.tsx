@@ -19,6 +19,7 @@ import { CertTrainingSection } from '../../../src/components/input/CertTrainingS
 import { StrengthsSection } from '../../../src/components/input/StrengthsSection'
 import { emptyDraft, type InputDraft } from '../../../src/state/draft'
 import { sectionInfos } from '../../../src/state/sectionStatus'
+import { NO_FEEDBACK, type Feedback } from '../../../src/state/validation'
 import { JobCard } from '../../../src/components/result/JobCard'
 import { KeywordCard } from '../../../src/components/result/KeywordCard'
 import { InputSummary } from '../../../src/components/result/InputSummary'
@@ -97,9 +98,9 @@ describe('입력 페이지 구성 (T045~T051)', () => {
     expect(screen.getByText(/\(선택\) · 선택/)).toBeInTheDocument()
   })
 
-  function Harness({ children }: { children: (p: { draft: InputDraft; onChange: (patch: Partial<InputDraft>) => void }) => React.ReactNode }) {
+  function Harness({ children }: { children: (p: { draft: InputDraft; onChange: (patch: Partial<InputDraft>) => void; feedback: Feedback }) => React.ReactNode }) {
     const [draft, setDraft] = useState(emptyDraft())
-    return <>{children({ draft, onChange: (patch) => setDraft((d) => ({ ...d, ...patch })) })}</>
+    return <>{children({ draft, onChange: (patch) => setDraft((d) => ({ ...d, ...patch })), feedback: NO_FEEDBACK })}</>
   }
 
   it('기본 정보: 나이 힌트, 최종학력 5개, 학력 상태 5개 옵션', () => {

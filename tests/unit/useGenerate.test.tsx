@@ -109,7 +109,7 @@ describe('useGenerate (T053)', () => {
       generate: async () =>
         ++n === 1
           ? { ok: true, result: MOCK_RESULTS.P1 }
-          : { ok: false, error: { code: 'RATE_LIMITED', message: 'x' } },
+          : { ok: false, error: { code: 'RATE_LIMITED', message: 'x', requestId: 'c_1' } },
     })
     await act(async () => {
       await result.current.gen.start()

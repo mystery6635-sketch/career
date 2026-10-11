@@ -6,7 +6,7 @@ import type {
   EducationStatus,
   GenerateRequest,
   Training,
-} from '@shared/types'
+} from '@shared/schema'
 
 export interface InputDraft {
   age: string

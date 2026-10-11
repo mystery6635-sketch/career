@@ -6,7 +6,7 @@ const initialSearch = typeof window === 'undefined' ? '' : window.location.searc
 const params = new URLSearchParams(initialSearch)
 
 /** 개발 환경의 ?mock= 쿼리 또는 VITE_AI_MODE=mock. 프로덕션 빌드에서는 상수로 false가 되어 mock 코드가 제거된다. */
-const MOCK_ENABLED = import.meta.env.VITE_AI_MODE === 'mock' || (import.meta.env.DEV && params.has('mock'))
+const MOCK_ENABLED = !import.meta.env.PROD && (import.meta.env.VITE_AI_MODE === 'mock' || params.has('mock'))
 
 export async function createAiService(): Promise<AiService> {
   if (MOCK_ENABLED) {

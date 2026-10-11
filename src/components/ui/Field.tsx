@@ -21,6 +21,18 @@ export interface FieldProps {
   children: (props: FieldControlProps) => ReactNode
 }
 
+/** 오류(빨강)·경고(노랑) 한 줄. 아이콘 + 굵은 텍스트. 경고는 role=status로 차분히 알린다(design §12, §22). */
+export function FieldMessage({ kind, id, children }: { kind: 'error' | 'warning'; id?: string; children: ReactNode }) {
+  return (
+    <p className={`field__${kind}`} id={id} role={kind === 'warning' ? 'status' : undefined}>
+      <span className="field__msg-icon" aria-hidden="true">
+        <span>{kind === 'error' ? '✕' : '!'}</span>
+      </span>
+      <span>{children}</span>
+    </p>
+  )
+}
+
 // 읽는 순서: 라벨 → (필수/선택) → 힌트 → 글자 수 → 오류 (design §22)
 export function Field({ label, required, hint, count, error, warning, hideLabel, children }: FieldProps) {
   const uid = useId()
@@ -55,20 +67,14 @@ export function Field({ label, required, hint, count, error, warning, hideLabel,
         </p>
       ) : null}
       {error ? (
-        <p className="field__error" id={errorId}>
-          <span className="field__msg-icon" aria-hidden="true">
-            <span>✕</span>
-          </span>
-          <span>{error}</span>
-        </p>
+        <FieldMessage kind="error" id={errorId}>
+          {error}
+        </FieldMessage>
       ) : null}
       {warning ? (
-        <p className="field__warning" id={warningId}>
-          <span className="field__msg-icon" aria-hidden="true">
-            <span>!</span>
-          </span>
-          <span>{warning}</span>
-        </p>
+        <FieldMessage kind="warning" id={warningId}>
+          {warning}
+        </FieldMessage>
       ) : null}
     </div>
   )

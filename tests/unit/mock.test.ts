@@ -3,7 +3,7 @@ import { MAX_LENGTH_RESULT, MOCK_RESULTS } from '../../src/mock/results'
 import { PERSONAS, PERSONA_VARIANTS } from '../../src/mock/personas'
 import { createMockService, pickResult, SLOW_DELAY_MS } from '../../src/services/ai/mock'
 import { draftToRequest, applicantToDraft } from '../../src/state/draft'
-import type { ResultPayload } from '@shared/types'
+import type { ResultPayload } from '@shared/schema'
 
 const request = draftToRequest(applicantToDraft(PERSONAS.P2))
 const signal = () => new AbortController().signal

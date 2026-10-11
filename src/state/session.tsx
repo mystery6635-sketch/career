@@ -1,6 +1,6 @@
 // 세션 상태는 React 메모리에만 둔다. 저장소·쿠키·URL에 쓰지 않으며 새로고침하면 사라진다(FR-025, 원칙 VI).
 import { createContext, useCallback, useContext, useMemo, useReducer, useState, type Dispatch, type ReactNode } from 'react'
-import type { ApiError, ResultPayload } from '@shared/types'
+import type { ApiError, ResultPayload } from '@shared/schema'
 import { createAiService } from '../services/ai'
 import type { AiService } from '../services/ai/types'
 import { emptyDraft, type InputDraft } from './draft'

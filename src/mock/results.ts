@@ -9,7 +9,7 @@ import type {
   ResultKeyword,
   ResultPayload,
   Sentence,
-} from '@shared/types'
+} from '@shared/schema'
 import { PERSONAS, type PersonaId } from './personas'
 
 type Ref = [InputField, number?]
@@ -466,7 +466,7 @@ export const MAX_LENGTH_RESULT: ResultPayload = buildResult(
     strength: i as 0 | 1 | 2,
     job: i as 0 | 1 | 2,
     description: [long120(), long120(), long120(i === 1)],
-    links: i === 2 ? [] : maxLinks(),
+    links: i === 2 ? [] : maxLinks().slice(0, 5), // 강점 1개 + 5개 = 연결 항목 최대 6개
     mismatchNote: i === 2 ? sized(MISMATCH, 200) : undefined,
   })),
 )

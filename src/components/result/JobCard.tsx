@@ -1,5 +1,5 @@
 import { RESULT_PAGE } from '@shared/messages'
-import type { ResultJob } from '@shared/types'
+import type { ResultJob } from '@shared/schema'
 import { StandardNameBadge } from '../ui/Badge'
 import { Tag } from '../ui/Tag'
 import { ConfirmNeeded, Sentences } from './ConfirmNeeded'

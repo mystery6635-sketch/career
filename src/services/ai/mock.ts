@@ -1,15 +1,15 @@
 import { PERSONAS, type PersonaId } from '../../mock/personas'
 import { MAX_LENGTH_RESULT, MOCK_RESULTS } from '../../mock/results'
-import type { ApiError, GenerateRequest, ResultPayload } from '@shared/types'
-import type { AiService, GenerateOptions, GenerateOutcome, MockScenario } from './types'
+import type { ApiError, GenerateRequest, ResultPayload } from '@shared/schema'
+import { clientError, type AiService, type GenerateOptions, type GenerateOutcome, type MockScenario } from './types'
 
 export const SLOW_DELAY_MS = 31_000
 export const SCENARIOS: MockScenario[] = ['ok', 'slow', 'timeout', 'fail', 'fail-once', 'format', 'limit']
 
 const ERRORS: Record<'fail' | 'format' | 'limit', ApiError> = {
-  fail: { code: 'UPSTREAM_FAILED', message: '연결이 원활하지 않았어요.' },
-  format: { code: 'OUTPUT_INVALID', message: '결과 형식이 맞지 않아요.' },
-  limit: { code: 'RATE_LIMITED', message: '짧은 시간에 요청이 너무 많았어요.', retryAfterSeconds: 60 },
+  fail: clientError('UPSTREAM_FAILED', '연결이 원활하지 않았어요.'),
+  format: clientError('OUTPUT_INVALID', '결과 형식이 맞지 않아요.'),
+  limit: clientError('RATE_LIMITED', '짧은 시간에 요청이 너무 많았어요.', { retryAfterSeconds: 60 }),
 }
 
 const isPersonaId = (v: string | undefined): v is PersonaId => !!v && v in PERSONAS

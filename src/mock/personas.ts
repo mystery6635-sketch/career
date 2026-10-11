@@ -1,5 +1,5 @@
 // test-personas.md의 가상 인물 P1~P5(변형 포함). 실제 사람의 정보가 아니다.
-import type { ApplicantInput } from '@shared/types'
+import type { ApplicantInput } from '@shared/schema'
 
 export type PersonaId = 'P1' | 'P2' | 'P3' | 'P4' | 'P5'
 

@@ -1,6 +1,6 @@
 // 복사 텍스트 형식(contracts/copy-and-print.md 1절). 구직자 입력 정보(나이, 입력 요약)는 넣지 않는다.
 import { needsConfirmLabel, RESULT_PAGE, standardNameConfirmLabel } from '@shared/messages'
-import type { LinkedInput, ResultPayload, Sentence } from '@shared/types'
+import type { LinkedInput, ResultPayload, Sentence } from '@shared/schema'
 
 const CONFIRM_PREFIX = `[${needsConfirmLabel}] `
 

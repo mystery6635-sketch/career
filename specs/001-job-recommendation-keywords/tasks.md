@@ -403,7 +403,7 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
   - 검증: 사람이 브라우저로 확인
   - 완료: §26 항목의 예/아니오 기록이 파일에 있고 "아니오" 항목마다 후속 Task나 예외가 적혀 있는가?
 
-- [ ] T066 Phase 3 게이트: `npm run check`와 `npm run test:e2e`를 통과시키고, **Phase 4 시작 전 Mock으로 전체 흐름과 `/design-sync`를 먼저 검증**한다.
+- [X] T066 Phase 3 게이트: `npm run check`와 `npm run test:e2e`를 통과시키고, **Phase 4 시작 전 Mock으로 전체 흐름과 `/design-sync`를 먼저 검증**한다.
   - **진행 기록**: `/design-sync`로 컴포넌트 17개를 새 Claude Design 프로젝트에 올림(미리보기 전부 good, 렌더 검사 17/17). 시안 v3와 구현 화면의 화면 단위 비교는 아직 하지 않았고, T065 기록과 `npm run check` 결과는 완료. 게이트 판정은 비교 후.
   - 요구사항: - · 원칙: XV · design: - · 파일: (확인 작업)
   - 검증: `npm run check`, `npm run test:e2e`
@@ -417,52 +417,53 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
 **의존**: Phase 3 게이트(T066) 완료. **이 Phase가 끝나 디자인이 확정되기 전에는 Phase 5를 시작하지 않는다.**
 **확인 필요**: `/design-sync`의 정확한 동작(어느 방향으로 동기화하는지, 입력·출력 형식)은 이 저장소에서 확인하지 못했다. T070에서 먼저 확인한다.
 
-- [ ] T067 `/design-sync` 실행 전 코드 구조 검사 스크립트를 만든다: (1) 하드코딩된 색(`#hex`, `rgb(`, `hsl(` — `tokens.css`와 인쇄 전용 값 제외), (2) 하드코딩된 간격·글자 크기(임의 값 `px` — 토큰 밖), (3) 컴포넌트 분리(페이지 파일이 `components/ui`를 쓰지 않고 직접 스타일링한 요소), (4) 토큰 이름이 design §16과 다른 사용을 검출해 보고서(`tests/e2e/__artifacts__/audit.md`)로 출력한다.
+- [X] T067 `/design-sync` 실행 전 코드 구조 검사 스크립트를 만든다: (1) 하드코딩된 색(`#hex`, `rgb(`, `hsl(` — `tokens.css`와 인쇄 전용 값 제외), (2) 하드코딩된 간격·글자 크기(임의 값 `px` — 토큰 밖), (3) 컴포넌트 분리(페이지 파일이 `components/ui`를 쓰지 않고 직접 스타일링한 요소), (4) 토큰 이름이 design §16과 다른 사용을 검출해 보고서(`tests/e2e/__artifacts__/audit.md`)로 출력한다.
   - 요구사항: FR-027 · 원칙: XIII, XV · design: §16, §19, §20 · 파일: `scripts/audit-design.mjs`, `package.json`(`audit:design`)
   - 검증: 의도적으로 하드코딩 색을 넣은 임시 파일에서 검출되는지 확인
   - 완료: `npm run audit:design`이 하드코딩된 색·간격을 목록으로 출력하는가?
 
-- [ ] T068 검사 결과를 수정한다: 검출된 하드코딩 값을 토큰으로 바꾸고, 반복되는 스타일 조각은 공통 컴포넌트로 옮긴다. 예외가 필요하면 파일과 이유를 `audit-design.mjs`의 허용 목록에 기록한다.
+- [X] T068 검사 결과를 수정한다: 검출된 하드코딩 값을 토큰으로 바꾸고, 반복되는 스타일 조각은 공통 컴포넌트로 옮긴다. 예외가 필요하면 파일과 이유를 `audit-design.mjs`의 허용 목록에 기록한다.
   - 요구사항: FR-027 · 원칙: XV · design: §16, §19 · 파일: `src/**`, `scripts/audit-design.mjs`
   - 검증: `npm run audit:design`
   - 완료: 검사 결과에 허용 목록 밖의 하드코딩이 0건인가?
 
-- [ ] T069 디자인 승인 기준을 확정한다(사용자 확인): 승인한 시안이 `시안 A - 서비스 프로토타입 v3.html`인지 확인한다(design 확인 필요 #1). v3에 없는 항목(외부 AI 전송 안내문, 지시문·강점 중복·식별 정보 경고, 형식 오류 상태, 시간 초과 문구 변경, 저장 버튼 비활성 안내)을 시안에 반영할지 결정해 `design-review.md`에 기록한다. **함께 승인받을 제안 값 목록**(spec Clarifications `Session 2026-10-11`과 design의 "제안, 승인 대기" 표시 항목): 요청 제한 10분 20회, 대기 중 취소 버튼 없음, 움직임 감소 시 페이드 없이 정지, 태블릿(≤1199px) 본문 17.5px 채택, 간격·글자 토큰은 시안 값 그대로, 터치 대상 간격 8px, 보조 글자 최소 13px, 경고·AI 전송 안내·형식 오류·시간 초과 문구, A4 한 장 목표, 강점 최소 2자, 키워드 카드의 "연결된 입력 항목" Tag 표시(design §13.4). 승인·수정·거절을 항목별로 기록하고, 거절·수정된 항목은 spec·design·tasks에 반영한다.
+- [X] T069 디자인 승인 기준을 확정한다(사용자 확인): 승인한 시안이 `시안 A - 서비스 프로토타입 v3.html`인지 확인한다(design 확인 필요 #1). v3에 없는 항목(외부 AI 전송 안내문, 지시문·강점 중복·식별 정보 경고, 형식 오류 상태, 시간 초과 문구 변경, 저장 버튼 비활성 안내)을 시안에 반영할지 결정해 `design-review.md`에 기록한다. **함께 승인받을 제안 값 목록**(spec Clarifications `Session 2026-10-11`과 design의 "제안, 승인 대기" 표시 항목): 요청 제한 10분 20회, 대기 중 취소 버튼 없음, 움직임 감소 시 페이드 없이 정지, 태블릿(≤1199px) 본문 17.5px 채택, 간격·글자 토큰은 시안 값 그대로, 터치 대상 간격 8px, 보조 글자 최소 13px, 경고·AI 전송 안내·형식 오류·시간 초과 문구, A4 한 장 목표, 강점 최소 2자, 키워드 카드의 "연결된 입력 항목" Tag 표시(design §13.4). 승인·수정·거절을 항목별로 기록하고, 거절·수정된 항목은 spec·design·tasks에 반영한다.
   - 요구사항: FR-009, FR-010, FR-020, FR-039, FR-041 · 원칙: XI · design: §2, §12, §14, 확인 필요 모음 · 파일: `specs/001-job-recommendation-keywords/design-review.md`
   - 검증: 사용자 답변 기록
   - 완료: 기준 시안, v3 미반영 항목의 처리, 위 제안 값 전부의 승인 여부가 `design-review.md`에 항목별로 기록되었는가?
 
-- [ ] T070 `/design-sync`를 실행한다. 실행 전에 이 명령이 무엇을 읽고 쓰는지(Claude Design 프로젝트 `ddba158f-537c-469e-9fe9-38e50fb7fbbd`의 파일을 덮어쓰는지) 확인하고, 덮어쓰기라면 사용자 승인을 받은 뒤 실행한다. 결과를 기록한다.
+- [X] T070 `/design-sync`를 실행한다. 실행 전에 이 명령이 무엇을 읽고 쓰는지(Claude Design 프로젝트 `ddba158f-537c-469e-9fe9-38e50fb7fbbd`의 파일을 덮어쓰는지) 확인하고, 덮어쓰기라면 사용자 승인을 받은 뒤 실행한다. 결과를 기록한다.
+  - **진행 기록**: 사용자 결정으로 건너뜀(2026-10-11)
   - 요구사항: - · 원칙: XI, XV · design: §16 · 파일: `specs/001-job-recommendation-keywords/design-review.md`
   - 검증: 명령 출력과 변경된 파일 목록을 기록
   - 완료: `/design-sync` 실행 결과(변경 대상, 오류 유무)가 기록되어 있는가?
 
-- [ ] T071 실제 컴포넌트와 디자인 토큰을 동기화한다: `src/styles/tokens.css`와 design.md §16~§20, Claude Design 시안의 CSS 변수를 대조해 차이를 목록화하고, **시안과 문서가 기준**이라는 규칙으로 코드(또는 승인된 경우 문서)를 맞춘다.
+- [X] T071 실제 컴포넌트와 디자인 토큰을 동기화한다: `src/styles/tokens.css`와 design.md §16~§20, Claude Design 시안의 CSS 변수를 대조해 차이를 목록화하고, **시안과 문서가 기준**이라는 규칙으로 코드(또는 승인된 경우 문서)를 맞춘다.
   - 요구사항: FR-027 · 원칙: XIII · design: §16~§20 · 파일: `src/styles/tokens.css`, `specs/001-job-recommendation-keywords/design.md`(필요 시), `design-review.md`
   - 검증: 토큰 값 비교 단위 테스트(T012, T013) 통과
   - 완료: 토큰 차이 목록이 비어 있거나 모든 차이에 결정 기록이 있는가?
 
-- [ ] T072 화면 캡처를 만든다: 세 화면 × 세 뷰포트(1440/1024/390px) + 상태 화면 7종 + 인쇄 미디어를 Playwright로 저장한다. 같은 화면을 Claude Design 시안 v3와 비교할 수 있게 `render_preview`로 시안 캡처 방법을 `design-review.md`에 기록한다(시안은 소스 기반 검증만 가능했고 렌더링은 아직 못 봤다).
+- [X] T072 화면 캡처를 만든다: 세 화면 × 세 뷰포트(1440/1024/390px) + 상태 화면 7종 + 인쇄 미디어를 Playwright로 저장한다. 같은 화면을 Claude Design 시안 v3와 비교할 수 있게 `render_preview`로 시안 캡처 방법을 `design-review.md`에 기록한다(시안은 소스 기반 검증만 가능했고 렌더링은 아직 못 봤다).
   - 요구사항: FR-028 · 원칙: XIV · design: §21, §26 · 파일: `tests/e2e/visual.spec.ts`, `tests/e2e/__artifacts__/`, `design-review.md`
   - 검증: 스크린샷 파일 생성
   - 완료: 세 화면 × 세 뷰포트와 상태 화면 7종, 인쇄의 캡처가 저장되었는가?
 
-- [ ] T073 구현과 승인된 시안 세 화면을 비교한다. design §26의 34개 항목과 §22 접근성 항목을 기준으로 문제를 표(심각도 CRITICAL/HIGH/MEDIUM/LOW | 화면 | 문제 | 관련 요구사항 | 수정 제안)로 `design-review.md`에 정리한다. 반투명·그라데이션 위 글자 대비를 측정한다(design §22 남은 항목). **시안 v3에 없는 상태(FR-039 안내문, 형식 오류, 지시문·강점 중복·식별 정보 경고 등)는 이 비교에서 "시안 없음"으로 표시하고 design §12·§14 기준으로 별도 점검한다. 그중 Phase 5에서 구현되는 UI는 T090에서 확인한다.**
+- [X] T073 구현과 승인된 시안 세 화면을 비교한다. design §26의 34개 항목과 §22 접근성 항목을 기준으로 문제를 표(심각도 CRITICAL/HIGH/MEDIUM/LOW | 화면 | 문제 | 관련 요구사항 | 수정 제안)로 `design-review.md`에 정리한다. 반투명·그라데이션 위 글자 대비를 측정한다(design §22 남은 항목). **시안 v3에 없는 상태(FR-039 안내문, 형식 오류, 지시문·강점 중복·식별 정보 경고 등)는 이 비교에서 "시안 없음"으로 표시하고 design §12·§14 기준으로 별도 점검한다. 그중 Phase 5에서 구현되는 UI는 T090에서 확인한다.**
   - 요구사항: FR-027, FR-028 · 원칙: XIII, XIV · design: §22, §26 · 파일: `specs/001-job-recommendation-keywords/design-review.md`
   - 검증: 사람이 캡처와 시안을 대조
   - 완료: 비교 표가 있고 모든 문제에 심각도가 지정되었는가?
 
-- [ ] T074 CRITICAL·HIGH 문제를 모두 수정한다. 수정마다 `design-review.md`의 해당 행에 결과를 기록한다. MEDIUM·LOW는 목록으로 남긴다.
+- [X] T074 CRITICAL·HIGH 문제를 모두 수정한다. 수정마다 `design-review.md`의 해당 행에 결과를 기록한다. MEDIUM·LOW는 목록으로 남긴다.
   - 요구사항: FR-027, FR-028 · 원칙: XIII, XIV · design: 문제별 · 파일: `src/**`, `design-review.md`
   - 검증: 수정한 문제를 같은 방법으로 재확인
   - 완료: CRITICAL·HIGH 문제가 0개 남았는가?
 
-- [ ] T075 디자인 회귀 검증을 만든다: 세 뷰포트, 인쇄 미디어, 모든 상태 화면(분석 중·지연·빈 화면·생성 실패·형식 오류·시간 초과·요청 제한)에 대해 스크린샷 비교 + `@axe-core/playwright` + 가로 스크롤 검사를 E2E로 자동화한다.
+- [X] T075 디자인 회귀 검증을 만든다: 세 뷰포트, 인쇄 미디어, 모든 상태 화면(분석 중·지연·빈 화면·생성 실패·형식 오류·시간 초과·요청 제한)에 대해 스크린샷 비교 + `@axe-core/playwright` + 가로 스크롤 검사를 E2E로 자동화한다.
   - 요구사항: FR-027, FR-028 · 원칙: XIII, XIV · design: §21, §22, §26 · 파일: `tests/e2e/regression.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 회귀 E2E가 세 뷰포트·인쇄·상태 화면 7종 모두에서 통과하는가? (입력 오류·경고 상태는 Phase 5의 T090에서 이 회귀 파일에 추가한다)
 
-- [ ] T076 Phase 4 게이트와 **디자인 확정 승인**: `npm run check`, `npm run test:e2e`, `npm run audit:design`을 통과시키고, 사용자에게 구현 화면을 보여 디자인 확정 승인을 받아 `design-review.md`에 기록한다. 승인 전에는 Phase 5를 시작하지 않는다. 승인 기록에는 "Phase 5에서 입력 오류·경고 UI가 추가되며 T090에서 design §12 기준으로 확인한다"를 포함한다.
+- [X] T076 Phase 4 게이트와 **디자인 확정 승인**: `npm run check`, `npm run test:e2e`, `npm run audit:design`을 통과시키고, 사용자에게 구현 화면을 보여 디자인 확정 승인을 받아 `design-review.md`에 기록한다. 승인 전에는 Phase 5를 시작하지 않는다. 승인 기록에는 "Phase 5에서 입력 오류·경고 UI가 추가되며 T090에서 design §12 기준으로 확인한다"를 포함한다.
   - 요구사항: - · 원칙: XV · design: - · 파일: `design-review.md`
   - 검증: 세 명령 통과 + 사용자 승인 기록
   - 완료: 세 명령이 통과하고 사용자의 디자인 확정 승인이 기록되었는가?
@@ -475,77 +476,77 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
 **의존**: Phase 4 게이트(T076, 디자인 확정) 완료.
 **제약 인용**: 아래 Task의 한도는 spec FR-037과 data-model.md 1.1절의 값을 그대로 쓴다.
 
-- [ ] T077 입력 스키마를 만든다(`shared/schema/input.ts`): `age` 정수 15~99 / `education.level` ∈ {고졸 이하, 전문대, 대졸, 석사, 박사}(코드 값 `highschool_or_below`, `college`, `bachelor`, `master`, `doctor`) / `education.status` ∈ {졸업, 재학, 휴학, 중퇴, 졸업예정}(`graduated`, `enrolled`, `leave`, `dropout`, `expected`) / `majors` 각 1~100자, 최대 6개 / `noCareer` 불리언이며 `true`이면 `careers` 빈 배열 / `careers` 최대 20개, 각 `jobTitle` 1~100자·`industry` 1~100자·`period` 1~50자, `noCareer=false`이면 1개 이상 / `intern.has` 필수, `has=true`이면 `content` 1~400자·`period` 1~50자 / `certifications` 각 1~100자, 최대 20개, `noCertifications=true`이면 빈 배열 / `trainings` 최대 20개, 각 `courseName` 1~100자·`period` 1~50자, `noTrainings=true`이면 빈 배열 / `strengths` **정확히 3개**, 각 공백 제외 2~100자. 오류 문구는 design §12 확정 문구와 DM 1.1 문구를 `shared/messages.ts`(T038)에서 가져온다.
+- [X] T077 입력 스키마를 만든다(`shared/schema/input.ts`): `age` 정수 15~99 / `education.level` ∈ {고졸 이하, 전문대, 대졸, 석사, 박사}(코드 값 `highschool_or_below`, `college`, `bachelor`, `master`, `doctor`) / `education.status` ∈ {졸업, 재학, 휴학, 중퇴, 졸업예정}(`graduated`, `enrolled`, `leave`, `dropout`, `expected`) / `majors` 각 1~100자, 최대 6개 / `noCareer` 불리언이며 `true`이면 `careers` 빈 배열 / `careers` 최대 20개, 각 `jobTitle` 1~100자·`industry` 1~100자·`period` 1~50자, `noCareer=false`이면 1개 이상 / `intern.has` 필수, `has=true`이면 `content` 1~400자·`period` 1~50자 / `certifications` 각 1~100자, 최대 20개, `noCertifications=true`이면 빈 배열 / `trainings` 최대 20개, 각 `courseName` 1~100자·`period` 1~50자, `noTrainings=true`이면 빈 배열 / `strengths` **정확히 3개**, 각 공백 제외 2~100자. 오류 문구는 design §12 확정 문구와 DM 1.1 문구를 `shared/messages.ts`(T038)에서 가져온다.
   - 요구사항: FR-001~008, FR-010, FR-037 · 원칙: VII · design: §11, §12 · 파일: `shared/schema/input.ts`
   - 검증: 단위 테스트(경계값, T089)
   - 완료: 위 모든 필드·한도가 스키마에 있고 문구가 한 파일에서 오는가?
 
-- [ ] T078 [P] 문자열 정규화 함수를 만든다: 앞뒤 공백 제거, 한 줄 입력 칸의 줄바꿈·연속 공백을 공백 하나로, 인턴 내용은 줄바꿈 허용하되 연속 줄바꿈 하나로, 공백만 있는 값은 비어 있음.
+- [X] T078 [P] 문자열 정규화 함수를 만든다: 앞뒤 공백 제거, 한 줄 입력 칸의 줄바꿈·연속 공백을 공백 하나로, 인턴 내용은 줄바꿈 허용하되 연속 줄바꿈 하나로, 공백만 있는 값은 비어 있음.
   - 요구사항: FR-010 · 원칙: VII · design: §12 · 파일: `shared/schema/normalize.ts`, `tests/unit/normalize.test.ts`
   - 검증: 단위 테스트
   - 완료: 공백만 있는 값이 "비어 있음"으로 처리되는가?
 
-- [ ] T079 [P] 생성 요청 스키마를 만든다(`shared/schema/request.ts`): `GenerateRequest` = 입력에서 **`age`를 뺀** 엄격 객체(모르는 필드는 거부), "없음" 불리언은 요청에 포함하지 않고 빈 배열로 전달.
+- [X] T079 [P] 생성 요청 스키마를 만든다(`shared/schema/request.ts`): `GenerateRequest` = 입력에서 **`age`를 뺀** 엄격 객체(모르는 필드는 거부), "없음" 불리언은 요청에 포함하지 않고 빈 배열로 전달.
   - 요구사항: FR-004, FR-029 · 원칙: V, VI · design: - · 파일: `shared/schema/request.ts`
   - 검증: 단위 테스트(`age`·`name`·`phone` 포함 요청 거부)
   - 완료: `age`가 포함된 요청이 스키마에서 거부되는가?
 
-- [ ] T080 [P] 출력 스키마를 만든다(`shared/schema/output.ts`): `jobs` 정확히 3개{`title` 1~30자, `subtitle` 1~40자, `isStandardName`, `rationale` 문장 1~3개, `linkedInputs` 1~6개, `checkPoint` 한 문장} / `keywords` 정확히 3개{`keyword` 1~20자, `strengthIndex` 0~2(3개가 0,1,2를 한 번씩), `linkedJobIndex` 0~2, `description` 문장 2~3개, `linkedInputs` 1~6개(`strength` 포함), `mismatchNote` 문자열 또는 null} / `Sentence`={`text` 1~120자, `needsConfirmation`} / `InputRef`={`field` ∈ education, major, career, intern, certification, training, strength, `index`}. `ResultPayload`는 `linkedInputs`에 `label`, `value`, 키워드에 `strengthText`, `linkedJobTitle`, 그리고 `notice`(두 줄), `generatedAt`을 추가한다.
+- [X] T080 [P] 출력 스키마를 만든다(`shared/schema/output.ts`): `jobs` 정확히 3개{`title` 1~30자, `subtitle` 1~40자, `isStandardName`, `rationale` 문장 1~3개, `linkedInputs` 1~6개, `checkPoint` 한 문장} / `keywords` 정확히 3개{`keyword` 1~20자, `strengthIndex` 0~2(3개가 0,1,2를 한 번씩), `linkedJobIndex` 0~2, `description` 문장 2~3개, `linkedInputs` 1~6개(`strength` 포함), `mismatchNote` 문자열 또는 null} / `Sentence`={`text` 1~120자, `needsConfirmation`} / `InputRef`={`field` ∈ education, major, career, intern, certification, training, strength, `index`}. `ResultPayload`는 `linkedInputs`에 `label`, `value`, 키워드에 `strengthText`, `linkedJobTitle`, 그리고 `notice`(두 줄), `generatedAt`을 추가한다.
   - 요구사항: FR-012~015, FR-020, FR-036 · 원칙: II, III, VIII · design: §13 · 파일: `shared/schema/output.ts`
   - 검증: 단위 테스트(개수 2/4개 거부, 문장 수·길이 한도)
   - 완료: 출력 스키마가 DM 2.1·2.2와 필드·한도가 일치하는가?
 
-- [ ] T081 [P] API 오류 스키마를 만든다(`shared/schema/api.ts`): `ApiError` {`code` ∈ VALIDATION_FAILED, PII_DETECTED, RATE_LIMITED, UPSTREAM_FAILED, OUTPUT_INVALID, TIMEOUT, INTERNAL, `message`, `retryAfterSeconds`?, `details`?(경로·규칙만, 입력 값 없음), `requestId`}, 성공·실패 응답 유니온.
+- [X] T081 [P] API 오류 스키마를 만든다(`shared/schema/api.ts`): `ApiError` {`code` ∈ VALIDATION_FAILED, PII_DETECTED, RATE_LIMITED, UPSTREAM_FAILED, OUTPUT_INVALID, TIMEOUT, INTERNAL, `message`, `retryAfterSeconds`?, `details`?(경로·규칙만, 입력 값 없음), `requestId`}, 성공·실패 응답 유니온.
   - 요구사항: FR-020, FR-023, FR-038 · 원칙: VIII, X · design: §14 · 파일: `shared/schema/api.ts`
   - 검증: 단위 테스트
   - 완료: 오류 코드 7개가 API 3절과 같은가?
 
-- [ ] T082 [P] 입력 보호 함수를 만든다(클라이언트·서버 공용): 식별 정보 형식 감지(주민등록번호 6-7자리, 휴대전화·일반전화 번호, 이메일) → **차단**, 지시문 형태 감지(DM 1.3 목록) → **경고만**, 강점 중복(공백·문장 부호 제거 후 같은 문장) → **경고만**.
+- [X] T082 [P] 입력 보호 함수를 만든다(클라이언트·서버 공용): 식별 정보 형식 감지(주민등록번호 6-7자리, 휴대전화·일반전화 번호, 이메일) → **차단**, 지시문 형태 감지(DM 1.3 목록) → **경고만**, 강점 중복(공백·문장 부호 제거 후 같은 문장) → **경고만**.
   - 요구사항: FR-009, FR-010, FR-041 · 원칙: VI, VII · design: §12 · 파일: `shared/guard/pii.ts`, `shared/guard/injection.ts`, `shared/guard/duplicate-strength.ts`, `tests/unit/guard.test.ts`
   - 검증: 단위 테스트(P5-a, P5-b, P4-b 입력과 정상 입력의 오탐 회귀)
   - 완료: 식별 정보는 차단, 지시문·중복은 경고로 분류되고 정상 입력이 통과하는가?
 
-- [ ] T083 임시 타입을 Zod 추론 타입으로 교체한다(`shared/types.ts` 삭제 또는 `z.infer`로 재export). 컴파일 오류를 모두 해결한다.
+- [X] T083 임시 타입을 Zod 추론 타입으로 교체한다(`shared/types.ts` 삭제 또는 `z.infer`로 재export). 컴파일 오류를 모두 해결한다.
   - 요구사항: FR-001~008 · 원칙: VII, VIII · design: - · 파일: `shared/types.ts`, `src/**`
   - 검증: `npm run typecheck`
   - 완료: 수동으로 쓴 입력·결과 타입이 남아 있지 않고 타입 검사가 통과하는가?
 
-- [ ] T084 Mock Data가 스키마를 통과하는지 검증한다: 페르소나 입력(정상 케이스)은 `ApplicantInput`을 통과하고(비정상 변형은 기대한 이유로 실패), Mock 결과는 `ResultPayload`를 통과해야 한다. 실패하면 Mock Data를 고친다.
+- [X] T084 Mock Data가 스키마를 통과하는지 검증한다: 페르소나 입력(정상 케이스)은 `ApplicantInput`을 통과하고(비정상 변형은 기대한 이유로 실패), Mock 결과는 `ResultPayload`를 통과해야 한다. 실패하면 Mock Data를 고친다.
   - 요구사항: FR-012~015 · 원칙: VIII · design: §13 · 파일: `tests/unit/mock-schema.test.ts`, `src/mock/*.ts`
   - 검증: `npm run test`
   - 완료: Mock 결과 전부가 출력 스키마를 통과하고 비정상 변형이 기대한 이유로 거부되는가?
 
-- [ ] T085 필드 오류와 글자 수 안내를 연결한다: 제출 시 입력 스키마로 검증해 오류를 해당 입력창 아래에 표시하고(빨강 + 아이콘 + 굵은 텍스트), 글자 수 안내 "n / 최대자"와 최대 도달 시 "(최대)"를 모든 텍스트 입력창에 표시한다. 오류 문구는 design §12 확정 문구 그대로.
+- [X] T085 필드 오류와 글자 수 안내를 연결한다: 제출 시 입력 스키마로 검증해 오류를 해당 입력창 아래에 표시하고(빨강 + 아이콘 + 굵은 텍스트), 글자 수 안내 "n / 최대자"와 최대 도달 시 "(최대)"를 모든 텍스트 입력창에 표시한다. 오류 문구는 design §12 확정 문구 그대로.
   - 요구사항: FR-010, FR-011, FR-037 · 원칙: VII, XIII · design: §11, §12 · 파일: `src/hooks/useFormValidation.ts`, `src/components/input/*`
   - 검증: 컴포넌트·E2E 테스트(필수 항목 비우고 제출)
   - 완료: 필수 항목을 비우고 제출하면 해당 입력창 아래에 확정 문구의 오류가 보이는가?
 
-- [ ] T086 오류 요약을 만든다: 제출 시 오류가 있으면 입력 제목 아래 빨강 2px 테두리 박스("입력 내용을 확인해 주세요. 고칠 항목이 N개 있어요."), 항목마다 "라벨: 메시지" 링크(높이 44px), 링크를 누르면 해당 입력창으로 스크롤·포커스, `role=alert`이며 포커스를 받음, 입력을 고치면 항목이 사라지고 개수가 갱신(0이면 요약 소멸), 오류 섹션의 목차 아이콘 "!"과 모바일 "! 확인 필요" 표시 + 모바일에서 오류 섹션 자동 열림. 결과는 생성하지 않고 다른 입력은 유지한다.
+- [X] T086 오류 요약을 만든다: 제출 시 오류가 있으면 입력 제목 아래 빨강 2px 테두리 박스("입력 내용을 확인해 주세요. 고칠 항목이 N개 있어요."), 항목마다 "라벨: 메시지" 링크(높이 44px), 링크를 누르면 해당 입력창으로 스크롤·포커스, `role=alert`이며 포커스를 받음, 입력을 고치면 항목이 사라지고 개수가 갱신(0이면 요약 소멸), 오류 섹션의 목차 아이콘 "!"과 모바일 "! 확인 필요" 표시 + 모바일에서 오류 섹션 자동 열림. 결과는 생성하지 않고 다른 입력은 유지한다.
   - 요구사항: FR-010, FR-011 · 원칙: VII, XIII · design: §12, §22 · 파일: `src/components/input/ErrorSummary.tsx`, `src/components/input/SectionNav.tsx`, `src/components/input/MobileAccordion.tsx`
   - 검증: E2E(링크 클릭 → 포커스 이동, 수정 → 개수 감소, 모바일 자동 열림)
   - 완료: 오류 요약 링크가 해당 입력창에 포커스를 주고 입력을 고치면 개수가 줄어드는가?
 
-- [ ] T087 경고와 차단을 연결한다: 식별 정보 감지 시 필드 오류(차단, 오류 요약 포함), 지시문 형태·강점 중복 감지 시 노랑 경고(오류 요약 개수에 미포함, 제출 가능, `role=status`). 문구는 DM 1.3·design §12 표.
+- [X] T087 경고와 차단을 연결한다: 식별 정보 감지 시 필드 오류(차단, 오류 요약 포함), 지시문 형태·강점 중복 감지 시 노랑 경고(오류 요약 개수에 미포함, 제출 가능, `role=status`). 문구는 DM 1.3·design §12 표.
   - 요구사항: FR-009, FR-010, FR-041 · 원칙: VI, VII · design: §12 · 파일: `src/components/input/*`, `src/hooks/useFormValidation.ts`
   - 검증: E2E(P5-a 경고 후 제출 가능, P5-b 차단, P4-b 경고)
   - 완료: 식별 정보는 제출이 막히고 지시문·중복은 경고 후 제출되는가?
 
-- [ ] T088 상호 배타와 개수·길이 제한을 적용한다: "없음" 선택 시 반복 입력 비활성(제출에서 제외), 강점 정확히 3개, 반복 항목 최대 개수(경력·자격증·교육이수 20, 전공 6), 텍스트 최대 길이(100/400/50자). 최대에서 입력이 멈추고 "(최대)" 표시.
+- [X] T088 상호 배타와 개수·길이 제한을 적용한다: "없음" 선택 시 반복 입력 비활성(제출에서 제외), 강점 정확히 3개, 반복 항목 최대 개수(경력·자격증·교육이수 20, 전공 6), 텍스트 최대 길이(100/400/50자). 최대에서 입력이 멈추고 "(최대)" 표시.
   - 요구사항: FR-003, FR-006~008, FR-037 · 원칙: VII · design: §11 · 파일: `src/components/input/*`
   - 검증: 단위·컴포넌트 테스트(경계값)
   - 완료: 최대 개수·길이에서 추가·입력이 막히고 안내가 보이는가?
 
-- [ ] T089 경계값 단위 테스트를 작성한다: 나이 14/15/99/100·소수·문자, 강점 2/3/4개·1자/2자/100자/101자, 전공 6/7개, 경력·자격증·교육이수 20/21개, 100/101자·400/401자·50/51자, 없음과 입력 동시, 인턴 있음 + 내용·기간 누락, 공백만 입력.
+- [X] T089 경계값 단위 테스트를 작성한다: 나이 14/15/99/100·소수·문자, 강점 2/3/4개·1자/2자/100자/101자, 전공 6/7개, 경력·자격증·교육이수 20/21개, 100/101자·400/401자·50/51자, 없음과 입력 동시, 인턴 있음 + 내용·기간 누락, 공백만 입력.
   - 요구사항: FR-004, FR-008, FR-037 · 원칙: VII · design: §11 · 파일: `tests/unit/input-schema.test.ts`
   - 검증: `npm run test`
   - 완료: 모든 경계값 케이스가 기대한 결과(통과·거부)를 내는가?
 
-- [ ] T090 E2E와 시각 회귀를 작성한다: 필수 항목 비우기 → 오류 요약 + 필드 오류 → 링크 포커스 → 수정 → 다시 제출, 강점 3개 아님, 나이 범위 밖, 다른 입력 유지. **디자인 확정(T076) 이후에 추가된 UI의 시각 확인**: 오류 요약, 필드 오류(빨강 2px + 아이콘 + 굵은 텍스트), 글자 수 안내 "n / 최대자"·"(최대)", 지시문·강점 중복 경고(노랑, 오류 개수 미포함), 식별 정보 차단 오류, 모바일 오류 섹션 자동 열림 상태를 세 뷰포트에서 캡처해 `tests/e2e/regression.spec.ts`에 추가하고, design §12 표(위치·문구·색 + 아이콘 + 텍스트)와 대조한 결과를 `design-review.md`의 "Phase 5 추가 UI" 절에 기록한다. 대조에서 CRITICAL·HIGH가 나오면 이 Task 안에서 수정한다.
+- [X] T090 E2E와 시각 회귀를 작성한다: 필수 항목 비우기 → 오류 요약 + 필드 오류 → 링크 포커스 → 수정 → 다시 제출, 강점 3개 아님, 나이 범위 밖, 다른 입력 유지. **디자인 확정(T076) 이후에 추가된 UI의 시각 확인**: 오류 요약, 필드 오류(빨강 2px + 아이콘 + 굵은 텍스트), 글자 수 안내 "n / 최대자"·"(최대)", 지시문·강점 중복 경고(노랑, 오류 개수 미포함), 식별 정보 차단 오류, 모바일 오류 섹션 자동 열림 상태를 세 뷰포트에서 캡처해 `tests/e2e/regression.spec.ts`에 추가하고, design §12 표(위치·문구·색 + 아이콘 + 텍스트)와 대조한 결과를 `design-review.md`의 "Phase 5 추가 UI" 절에 기록한다. 대조에서 CRITICAL·HIGH가 나오면 이 Task 안에서 수정한다.
   - 요구사항: FR-009, FR-010, FR-011, FR-041, SC-006 · 원칙: VII, XIII · design: §12, §22 · 파일: `tests/e2e/validation.spec.ts`, `tests/e2e/regression.spec.ts`, `specs/001-job-recommendation-keywords/design-review.md`
   - 검증: `npm run test:e2e`, 캡처와 design §12 표 대조(사람)
   - 완료: 검증 E2E와 입력 오류·경고 상태 회귀가 3개 뷰포트에서 통과하고 design §12 대조 기록에 미해결 CRITICAL·HIGH가 없는가?
 
-- [ ] T091 Phase 5 게이트: `npm run check`, `npm run test:e2e`(T090 시각 회귀 포함), `npm run audit:design` 통과. 스키마가 `shared/`에만 있고 `src/`·`server/`가 같은 모듈을 가져오는지 확인한다.
+- [X] T091 Phase 5 게이트: `npm run check`, `npm run test:e2e`(T090 시각 회귀 포함), `npm run audit:design` 통과. 스키마가 `shared/`에만 있고 `src/`·`server/`가 같은 모듈을 가져오는지 확인한다.
   - 요구사항: - · 원칙: VII, VIII, XV · design: - · 파일: (확인 작업)
   - 검증: 세 명령 + `shared/schema` 외 위치에 스키마 중복 정의 0건(검색)
   - 완료: 세 명령이 통과하고 스키마 정의가 한 곳뿐이며 T090의 design §12 대조 기록이 완료되었는가?
@@ -558,62 +559,62 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
 **의존**: Phase 5 스키마 완료(T091).
 **확인 필요**: LLM 공급자 SDK와 가격, Vercel Hobby 함수 최대 실행 시간(120초 가능 여부), 서버리스 함수의 ESM·공유 폴더 번들링.
 
-- [ ] T092 서버 설정 모듈을 만든다: `LLM_PROVIDER`, `LLM_MODEL`, `LLM_API_KEY`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`를 읽고, 필수 값이 없으면 `INTERNAL`로 처리하되 원인은 응답에 노출하지 않는다. 프로덕션에서 `LLM_PROVIDER=mock`이면 시작을 거부한다. 키 값은 로그·응답에 쓰지 않는다.
+- [X] T092 서버 설정 모듈을 만든다: `LLM_PROVIDER`, `LLM_MODEL`, `LLM_API_KEY`, `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS`를 읽고, 필수 값이 없으면 `INTERNAL`로 처리하되 원인은 응답에 노출하지 않는다. 프로덕션에서 `LLM_PROVIDER=mock`이면 시작을 거부한다. 키 값은 로그·응답에 쓰지 않는다.
   - 요구사항: FR-040 · 원칙: IX, XV · design: - · 파일: `server/config.ts`, `tests/contract/config.test.ts`
   - 검증: 단위 테스트(누락, 프로덕션 mock 거부)
   - 완료: 프로덕션에서 `mock` 공급자가 거부되고 키가 로그에 나오지 않는가?
 
-- [ ] T093 [P] 안전한 로거를 만든다: 요청 식별자, 처리 단계, 결과 코드, 소요 시간, 재요청 여부만 기록. 요청·응답 본문, 입력 값, 모델 응답 원문, 프롬프트, SDK 오류 객체 전체는 기록하지 않는다(상태 코드와 오류 이름만). **`Error.message`·스택·Zod 오류의 `received` 값도 기록하지 않는다**(JSON 파싱 오류 메시지에 본문 조각이, Zod 오류에 입력 값이 들어갈 수 있다). 오류는 `code`와 오류 클래스 이름만 로그로 남긴다.
+- [X] T093 [P] 안전한 로거를 만든다: 요청 식별자, 처리 단계, 결과 코드, 소요 시간, 재요청 여부만 기록. 요청·응답 본문, 입력 값, 모델 응답 원문, 프롬프트, SDK 오류 객체 전체는 기록하지 않는다(상태 코드와 오류 이름만). **`Error.message`·스택·Zod 오류의 `received` 값도 기록하지 않는다**(JSON 파싱 오류 메시지에 본문 조각이, Zod 오류에 입력 값이 들어갈 수 있다). 오류는 `code`와 오류 클래스 이름만 로그로 남긴다.
   - 요구사항: FR-040 · 원칙: VI · design: - · 파일: `server/log.ts`, `tests/contract/log.test.ts`
   - 검증: 로그 캡처 테스트(입력 문자열이 출력에 없음)
   - 완료: 정상·잘못된 JSON·스키마 위반 요청에서 입력 값이 로그 출력에 없는가?
 
-- [ ] T094 [P] 요청 횟수 제한을 만든다: 서버 메모리 슬라이딩 윈도우, 키는 IP를 해시한 값(원본 IP는 저장·로그하지 않음), 초기값 10분 20회(환경 변수로 조정). 초과 시 `RATE_LIMITED`, `Retry-After`. 인스턴스별 최선 노력이라는 한계를 코드 주석과 `quickstart.md`에 적는다.
+- [X] T094 [P] 요청 횟수 제한을 만든다: 서버 메모리 슬라이딩 윈도우, 키는 IP를 해시한 값(원본 IP는 저장·로그하지 않음), 초기값 10분 20회(환경 변수로 조정). 초과 시 `RATE_LIMITED`, `Retry-After`. 인스턴스별 최선 노력이라는 한계를 코드 주석과 `quickstart.md`에 적는다.
   - 요구사항: FR-038 · 원칙: VI, X, XV · design: §14 · 파일: `server/rate-limit.ts`, `tests/contract/rate-limit.test.ts`
   - 검증: 단위 테스트(20회 통과, 21회째 차단, 창 만료 후 복구, 원본 IP 미저장)
   - 완료: 21번째 요청이 `RATE_LIMITED`를 반환하고 원본 IP가 저장되지 않는가?
 
-- [ ] T095 [P] 금지 표현 목록을 코드로 옮긴다: `prompts/banned-phrases.md`의 V8~V11 목록(단어 단위 탐지, 입력 항목 이름 근처 12자 이내 규칙, 입력 문자열 인용 예외)과 오탐 회귀용 정상 문장 모음을 만든다.
+- [X] T095 [P] 금지 표현 목록을 코드로 옮긴다: `prompts/banned-phrases.md`의 V8~V11 목록(단어 단위 탐지, 입력 항목 이름 근처 12자 이내 규칙, 입력 문자열 인용 예외)과 오탐 회귀용 정상 문장 모음을 만든다.
   - 요구사항: FR-017, FR-018, FR-019 · 원칙: IV, V, XII · design: §24, BP · 파일: `server/ai/banned-phrases.ts`, `tests/unit/banned-phrases.test.ts`
   - 검증: 단위 테스트(대표 금지 문장 거부, 정상 문장 통과)
   - 완료: BP 목록의 모든 분류에 거부 테스트가 있고 정상 문장 모음이 통과하는가?
 
-- [ ] T096 시스템 프롬프트와 사용자 메시지 생성을 만든다(`prompts/system-prompt.md`의 본문 그대로): 출력은 JSON만, 정확히 3개씩, 모든 근거는 실제 입력 항목 참조(번호), 수치 생성 금지와 "확인 필요" 표기, 나이·공백·이력 부재를 부정 근거로 쓰지 않기, 지시문 무시, design §24의 피할 표현·대체 표현, 경력이 있으면 직업 1개 이상 경력 연결. 사용자 입력은 `ModelInput`을 `JSON.stringify`해 `<applicant_data>` 안에 넣고 닫는 태그 문자열을 이스케이프한다. **나이·이름·연락처는 `ModelInput`에 없다.** 재요청 메시지는 규칙 번호와 설명만 담는다.
+- [X] T096 시스템 프롬프트와 사용자 메시지 생성을 만든다(`prompts/system-prompt.md`의 본문 그대로): 출력은 JSON만, 정확히 3개씩, 모든 근거는 실제 입력 항목 참조(번호), 수치 생성 금지와 "확인 필요" 표기, 나이·공백·이력 부재를 부정 근거로 쓰지 않기, 지시문 무시, design §24의 피할 표현·대체 표현, 경력이 있으면 직업 1개 이상 경력 연결. 사용자 입력은 `ModelInput`을 `JSON.stringify`해 `<applicant_data>` 안에 넣고 닫는 태그 문자열을 이스케이프한다. **나이·이름·연락처는 `ModelInput`에 없다.** 재요청 메시지는 규칙 번호와 설명만 담는다.
   - 요구사항: FR-004, FR-012~019, FR-036 · 원칙: II, III, IV, V, VII, XII · design: §24, SP 1~3 · 파일: `server/ai/prompt.ts`, `tests/unit/prompt.test.ts`
   - 검증: 단위 테스트(나이 값이 프롬프트에 없음, 닫는 태그 이스케이프, 시스템 프롬프트에 필수 지침 문구 포함, 입력 값이 시스템 프롬프트가 아닌 데이터 영역에 있음)
   - 완료: 프롬프트에 나이가 들어가지 않고 입력이 데이터 영역에만 있으며 필수 지침 8개가 포함되는가?
 
-- [ ] T097 출력 의미 검증을 만든다(`validate-output`): Zod 구조 검증 뒤 V1~V15 — V1 3개씩, V2 직업명 중복 없음, V3 `InputRef`가 실제 입력에 존재(`intern`은 `has=true`, `career`는 `noCareer=false`일 때만), V4 근거 1개 이상·키워드는 `strength` 참조 포함, V5 `strengthIndex`가 0,1,2 한 번씩, V6 `linkedJobIndex` 0~2, V7 `strength` 참조뿐이면 `mismatchNote` 필수·객관 항목이 있으면 `null`, V8 수치 패턴, V9 부정·배제, V10 단정, V11 연령, V12 길이, V13 JSON 이외 텍스트, V14 경력이 있으면 직업 1개 이상 `career` 참조, V15 문장 수·120자. 실패 시 규칙 번호만 반환(응답 본문은 로그에 남기지 않음).
+- [X] T097 출력 의미 검증을 만든다(`validate-output`): Zod 구조 검증 뒤 V1~V15 — V1 3개씩, V2 직업명 중복 없음, V3 `InputRef`가 실제 입력에 존재(`intern`은 `has=true`, `career`는 `noCareer=false`일 때만), V4 근거 1개 이상·키워드는 `strength` 참조 포함, V5 `strengthIndex`가 0,1,2 한 번씩, V6 `linkedJobIndex` 0~2, V7 `strength` 참조뿐이면 `mismatchNote` 필수·객관 항목이 있으면 `null`, V8 수치 패턴, V9 부정·배제, V10 단정, V11 연령, V12 길이, V13 JSON 이외 텍스트, V14 경력이 있으면 직업 1개 이상 `career` 참조, V15 문장 수·120자. 실패 시 규칙 번호만 반환(응답 본문은 로그에 남기지 않음).
   - 요구사항: FR-013~015, FR-017, FR-018, FR-020, SC-003 · 원칙: II, III, IV, V, VIII · design: §13, DM 5 · 파일: `server/ai/validate-output.ts`, `tests/unit/validate-output.test.ts`
   - 검증: 규칙마다 위반 케이스 1개 + 통과 케이스 1개 단위 테스트, Mock 결과 전체(T040)가 통과
   - 완료: V1~V15 각각에 위반·통과 테스트가 있고 Mock 결과가 모두 통과하는가?
 
-- [ ] T098 LLM 클라이언트를 공급자 한 곳으로 격리한다(`server/ai/client.ts`): 기본 Anthropic(저비용 모델), 시도당 제한 55초, 호출 오류는 `UPSTREAM_FAILED`로 변환, 공급자의 속도 제한도 `UPSTREAM_FAILED`. 테스트·개발용 `mock` 공급자(정상, 형식 오류, 실패, 지연 모드)는 프로덕션 빌드에서 거부. 키는 서버 환경 변수에서만 읽는다.
+- [X] T098 LLM 클라이언트를 공급자 한 곳으로 격리한다(`server/ai/client.ts`): 기본 Anthropic(저비용 모델), 시도당 제한 55초, 호출 오류는 `UPSTREAM_FAILED`로 변환, 공급자의 속도 제한도 `UPSTREAM_FAILED`. 테스트·개발용 `mock` 공급자(정상, 형식 오류, 실패, 지연 모드)는 프로덕션 빌드에서 거부. 키는 서버 환경 변수에서만 읽는다.
   - 요구사항: FR-023 · 원칙: IX, X · design: - · 파일: `server/ai/client.ts`, `package.json`(SDK 추가, 필요성 기록)
   - 검증: 단위 테스트(mock 모드), 시도 제한 시간(가짜 타이머)
   - 완료: 모든 LLM 호출 코드가 `client.ts` 한 파일에만 있고 mock이 프로덕션에서 거부되는가?
 
-- [ ] T099 생성 흐름을 만든다(`server/ai/generate.ts`): `ModelInput` 구성(번호 부여) → 프롬프트 → 호출 → 파싱 → Zod + `validate-output` → 실패 시 같은 입력으로 **1회** 재요청(규칙 번호만 전달) → 그래도 실패하면 `OUTPUT_INVALID`, 합계 110초 초과 시 `TIMEOUT`, 성공 시 표시용 값(`label`, `value`, `strengthText`, `linkedJobTitle`)과 `notice` 두 줄(`shared/messages.ts`에서 가져옴)·`generatedAt`을 서버가 붙인다. 모델은 안내문을 만들지 않는다.
+- [X] T099 생성 흐름을 만든다(`server/ai/generate.ts`): `ModelInput` 구성(번호 부여) → 프롬프트 → 호출 → 파싱 → Zod + `validate-output` → 실패 시 같은 입력으로 **1회** 재요청(규칙 번호만 전달) → 그래도 실패하면 `OUTPUT_INVALID`, 합계 110초 초과 시 `TIMEOUT`, 성공 시 표시용 값(`label`, `value`, `strengthText`, `linkedJobTitle`)과 `notice` 두 줄(`shared/messages.ts`에서 가져옴)·`generatedAt`을 서버가 붙인다. 모델은 안내문을 만들지 않는다.
   - 요구사항: FR-012~016, FR-020, FR-023 · 원칙: I, II, VIII, X · design: §13, API 2 · 파일: `server/ai/generate.ts`, `server/ai/to-result.ts`, `tests/contract/generate-flow.test.ts`
   - 검증: 모의 LLM으로 (첫 응답 실패 → 두 번째 성공 → 호출 정확히 2회), (두 번 모두 실패 → `OUTPUT_INVALID`), (가짜 번호 지목 → 거부), (`notice` 항상 포함)
   - 완료: 재요청이 정확히 1회이고 `notice`가 모델 출력과 무관하게 항상 붙는가?
 
-- [ ] T100 요청 핸들러를 만든다(`server/handler.ts`): 본문 32KB 초과 → `VALIDATION_FAILED`, 요청 제한 확인(비싼 작업 전), `GenerateRequest` 엄격 검증(`age` 포함 시 거부), 입력 정규화, 식별 정보 감지 → `PII_DETECTED`, 생성 흐름, 오류 코드·HTTP 상태를 API 3절대로 반환, 응답에 원인(공급자명·스택) 미포함, `Cache-Control: no-store`, `POST` 외 메서드는 405. **핸들러 전체를 `try/catch`로 감싸** 본문 파싱 오류(잘못된 JSON 포함)를 포함한 모든 예외를 `INTERNAL`(파싱 오류는 `VALIDATION_FAILED`)로 바꾸고, 예외 객체를 던지거나 `console`로 출력하지 않는다(호스팅 런타임이 잡히지 않은 예외를 메시지째 로그에 남기기 때문).
+- [X] T100 요청 핸들러를 만든다(`server/handler.ts`): 본문 32KB 초과 → `VALIDATION_FAILED`, 요청 제한 확인(비싼 작업 전), `GenerateRequest` 엄격 검증(`age` 포함 시 거부), 입력 정규화, 식별 정보 감지 → `PII_DETECTED`, 생성 흐름, 오류 코드·HTTP 상태를 API 3절대로 반환, 응답에 원인(공급자명·스택) 미포함, `Cache-Control: no-store`, `POST` 외 메서드는 405. **핸들러 전체를 `try/catch`로 감싸** 본문 파싱 오류(잘못된 JSON 포함)를 포함한 모든 예외를 `INTERNAL`(파싱 오류는 `VALIDATION_FAILED`)로 바꾸고, 예외 객체를 던지거나 `console`로 출력하지 않는다(호스팅 런타임이 잡히지 않은 예외를 메시지째 로그에 남기기 때문).
   - 요구사항: FR-004, FR-009, FR-010, FR-020, FR-023, FR-038 · 원칙: VI, VII, VIII, X · design: §14, API 1~4 · 파일: `server/handler.ts`, `api/generate.ts`
   - 검증: 계약 테스트(T101)
   - 완료: 오류 코드 7개가 API 3절의 HTTP 상태로 반환되고 응답에 내부 원인이 없는가?
 
-- [ ] T101 계약 테스트를 작성한다(API 6절 11개 행): `age` 포함 → 400·LLM 호출 0회, 강점 2개/4개 → 400, 주민번호 형식 → `PII_DETECTED`, 모의 LLM 직업 2개 → 재요청 후 `OUTPUT_INVALID`, 첫 응답 실패·둘째 성공, 가짜 항목 번호, `%`·`연봉` 출력 거부, `notice` 항상 포함, 21번째 요청 → 429, 로그에 입력 값 없음, 응답·번들에 키 없음. 추가: **잘못된 JSON 본문(입력 문자열 조각 포함)과 스키마 위반 본문을 보낸 뒤 로그·응답에 그 문자열이 없음**.
+- [X] T101 계약 테스트를 작성한다(API 6절 11개 행): `age` 포함 → 400·LLM 호출 0회, 강점 2개/4개 → 400, 주민번호 형식 → `PII_DETECTED`, 모의 LLM 직업 2개 → 재요청 후 `OUTPUT_INVALID`, 첫 응답 실패·둘째 성공, 가짜 항목 번호, `%`·`연봉` 출력 거부, `notice` 항상 포함, 21번째 요청 → 429, 로그에 입력 값 없음, 응답·번들에 키 없음. 추가: **잘못된 JSON 본문(입력 문자열 조각 포함)과 스키마 위반 본문을 보낸 뒤 로그·응답에 그 문자열이 없음**.
   - 요구사항: FR-004, FR-009, FR-013, FR-016, FR-017, FR-020, FR-038, FR-040 · 원칙: II, IV, VI, VIII, IX · design: API 6 · 파일: `tests/contract/generate.test.ts`
   - 검증: `npm run test`
   - 완료: API 6절의 11개 테스트가 모두 통과하는가?
 
-- [ ] T102 로컬 개발 서버와 서버리스 함수를 연결해 확인한다: `npm run dev`에서 `/api/generate`가 `server/handler.ts`를 통해 `LLM_PROVIDER=mock`으로 응답하고, 서버 코드가 브라우저 번들에 들어가지 않는지 확인(ESLint 규칙 T004 + 빌드 산출물 검색).
+- [X] T102 로컬 개발 서버와 서버리스 함수를 연결해 확인한다: `npm run dev`에서 `/api/generate`가 `server/handler.ts`를 통해 `LLM_PROVIDER=mock`으로 응답하고, 서버 코드가 브라우저 번들에 들어가지 않는지 확인(ESLint 규칙 T004 + 빌드 산출물 검색).
   - 요구사항: FR-040 · 원칙: IX · design: - · 파일: `vite.config.ts`, `api/generate.ts`
   - 검증: `curl`로 mock 응답 확인, `dist`에서 `server/` 코드 문자열 검색 0건
   - 완료: 로컬에서 mock 공급자로 `/api/generate`가 계약 형태로 응답하는가?
 
-- [ ] T103 [P] 페르소나 평가 스크립트를 만든다(`tests/eval/run-personas.ts`, `npm run eval:personas`): 실제 LLM으로 P1~P5(P5-b·c는 입력 단계 차단 확인)를 각각 3회 생성하고, `validate-output` 결과와 결과 JSON을 `tests/eval/out/`(Git 제외)에 저장한다. 비용 때문에 CI에는 넣지 않는다. 결과 파일에는 가상 페르소나만 있다.
+- [X] T103 [P] 페르소나 평가 스크립트를 만든다(`tests/eval/run-personas.ts`, `npm run eval:personas`): 실제 LLM으로 P1~P5(P5-b·c는 입력 단계 차단 확인)를 각각 3회 생성하고, `validate-output` 결과와 결과 JSON을 `tests/eval/out/`(Git 제외)에 저장한다. 비용 때문에 CI에는 넣지 않는다. 결과 파일에는 가상 페르소나만 있다.
   - 요구사항: FR-018, SC-005, SC-013 · 원칙: II, IV, V, XII · design: §24, test-personas · 파일: `tests/eval/run-personas.ts`, `.gitignore`, `package.json`
   - 검증: 모의 공급자로 스크립트가 실행됨
   - 완료: 스크립트가 페르소나별 3회 결과와 자동 검증 결과를 파일로 저장하는가?
@@ -640,27 +641,27 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
 **목표**: 화면이 Mock이 아닌 실제 서버 라우트를 쓰도록 바꾸고, 오류·재시도·복사·인쇄를 실제 데이터로 완성한다.
 **의존**: Phase 6의 서버 라우트가 페르소나 5개 검증을 통과(T104)한 뒤 시작.
 
-- [ ] T107 HTTP AI 서비스를 만든다(`src/services/ai/http.ts`): `/api/generate`에 요청 본문(**나이 제외**)을 보내고 응답을 출력 스키마·`ApiError` 스키마로 검증한다. 응답 형식이 맞지 않으면 클라이언트 "생성 실패"로 처리. `VITE_AI_MODE`로 `http`(기본)와 `mock`을 전환하며, mock은 테스트·개발용으로 **유지**한다. 프로덕션 빌드에서는 mock 시나리오 코드가 포함되지 않게 한다.
+- [X] T107 HTTP AI 서비스를 만든다(`src/services/ai/http.ts`): `/api/generate`에 요청 본문(**나이 제외**)을 보내고 응답을 출력 스키마·`ApiError` 스키마로 검증한다. 응답 형식이 맞지 않으면 클라이언트 "생성 실패"로 처리. `VITE_AI_MODE`로 `http`(기본)와 `mock`을 전환하며, mock은 테스트·개발용으로 **유지**한다. 프로덕션 빌드에서는 mock 시나리오 코드가 포함되지 않게 한다.
   - 요구사항: FR-004, FR-020, FR-023 · 원칙: VIII, IX, X · design: API 1, 3 · 파일: `src/services/ai/http.ts`, `src/services/ai/index.ts`, `vite.config.ts`
   - 검증: 단위 테스트(요청 본문에 `age` 없음, 응답 스키마 검증), `dist`에서 mock 시나리오 문자열 검색 0건
   - 완료: 요청 본문에 나이가 없고 프로덕션 빌드에 mock 코드가 없는가?
 
-- [ ] T108 오류 코드별 화면 상태를 연결한다(API 3절): `UPSTREAM_FAILED`·`INTERNAL`·네트워크·응답 형식 오류 → 생성 실패, `OUTPUT_INVALID` → 형식 오류, `TIMEOUT`·120초 중단 → 시간 초과, `RATE_LIMITED` → 요청 제한(숫자 미표시), `VALIDATION_FAILED`·`PII_DETECTED` → 입력 화면 필드 오류 + 오류 요약.
+- [X] T108 오류 코드별 화면 상태를 연결한다(API 3절): `UPSTREAM_FAILED`·`INTERNAL`·네트워크·응답 형식 오류 → 생성 실패, `OUTPUT_INVALID` → 형식 오류, `TIMEOUT`·120초 중단 → 시간 초과, `RATE_LIMITED` → 요청 제한(숫자 미표시), `VALIDATION_FAILED`·`PII_DETECTED` → 입력 화면 필드 오류 + 오류 요약.
   - 요구사항: FR-009, FR-020, FR-023, FR-038 · 원칙: VII, X · design: §14, API 3 · 파일: `src/hooks/useGenerate.ts`, `src/pages/ResultPage.tsx`, `src/pages/InputPage.tsx`
   - 검증: E2E(`page.route`로 오류 코드별 응답을 주입해 화면 확인)
   - 완료: 오류 코드 7개와 클라이언트 오류 3개가 각각 올바른 화면으로 이어지는가?
 
-- [ ] T109 생성 실패 시 입력 유지와 다시 시도를 완성한다: 모든 실패·시간 초과·요청 제한 화면에서 `input`이 그대로이고, "다시 시도"가 입력을 다시 하지 않고 같은 입력으로 요청하며(타이머 0초부터), "입력 수정하기"가 `/input`에서 값을 유지한다.
+- [X] T109 생성 실패 시 입력 유지와 다시 시도를 완성한다: 모든 실패·시간 초과·요청 제한 화면에서 `input`이 그대로이고, "다시 시도"가 입력을 다시 하지 않고 같은 입력으로 요청하며(타이머 0초부터), "입력 수정하기"가 `/input`에서 값을 유지한다.
   - 요구사항: FR-011, FR-023, SC-007 · 원칙: X · design: §5, §14 · 파일: `src/hooks/useGenerate.ts`, `src/state/session.tsx`
   - 검증: E2E(실패 주입 → 입력 유지 확인 → 다시 시도 성공)
   - 완료: 실패 후 입력값이 모두 남아 있고 다시 시도로 결과가 나오는가?
 
-- [ ] T110 입력 수정 후 다시 생성을 완성한다: 결과 화면 "입력 수정하기" → 수정 → "결과 생성하기" → 새 결과(재생성 알림), "다시 생성하기" → 새 결과, 재생성 실패 시 이전 결과를 표시하지 않고 오류 화면을 보인다. 새 결과가 이전과 달라질 수 있다.
+- [X] T110 입력 수정 후 다시 생성을 완성한다: 결과 화면 "입력 수정하기" → 수정 → "결과 생성하기" → 새 결과(재생성 알림), "다시 생성하기" → 새 결과, 재생성 실패 시 이전 결과를 표시하지 않고 오류 화면을 보인다. 새 결과가 이전과 달라질 수 있다.
   - 요구사항: FR-024 · 원칙: X · design: §5, §13.6 · 파일: `src/hooks/useGenerate.ts`, `src/pages/ResultPage.tsx`
   - 검증: E2E(입력 하나 수정 후 재생성, 재생성 실패 주입)
   - 완료: 수정한 입력이 요청에 반영되고 재생성 실패 시 이전 결과가 보이지 않는가?
 
-- [ ] T111 결과 복사를 실제 결과로 완성한다: 클립보드에 CP 1절 형식으로 복사, 성공·실패 알림이 `aria-live=polite`에 텍스트로 나타나 화면 낭독기에 알려지고, 버튼 글자가 2.5초간 "✓ 복사했어요". 클립보드 권한 거부 시 실패 알림.
+- [X] T111 결과 복사를 실제 결과로 완성한다: 클립보드에 CP 1절 형식으로 복사, 성공·실패 알림이 `aria-live=polite`에 텍스트로 나타나 화면 낭독기에 알려지고, 버튼 글자가 2.5초간 "✓ 복사했어요". 클립보드 권한 거부 시 실패 알림.
   - 요구사항: FR-021, FR-027 · 원칙: XIII · design: §14, §22, CP 1 · 파일: `src/components/result/ActionBar.tsx`, `src/components/result/CopyNotice.tsx`
   - 검증: E2E(클립보드 읽기로 내용 확인, live region 텍스트 확인, 권한 거부 시뮬레이션)
   - 완료: 복사한 텍스트에 안내문 두 줄이 있고 알림이 `aria-live` 영역에 나타나는가?
@@ -670,7 +671,7 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
   - 검증: `page.pdf({ format: 'A4' })` 페이지 수
   - 완료: 최대 길이 결과의 A4 PDF가 1쪽인가?
 
-- [ ] T113 [P] 서버 mock 공급자를 쓰는 통합 E2E를 만든다(`LLM_PROVIDER=mock`, 개발 서버): 정상, 형식 오류 후 재요청 성공, 실패, 요청 제한(`RATE_LIMIT_MAX=2`), 지연(31초 이상은 가짜 타이머 또는 짧은 임계값 환경 변수)을 실제 `/api/generate` 경로로 재현한다.
+- [X] T113 [P] 서버 mock 공급자를 쓰는 통합 E2E를 만든다(`LLM_PROVIDER=mock`, 개발 서버): 정상, 형식 오류 후 재요청 성공, 실패, 요청 제한(`RATE_LIMIT_MAX=2`), 지연(31초 이상은 가짜 타이머 또는 짧은 임계값 환경 변수)을 실제 `/api/generate` 경로로 재현한다.
   - 요구사항: FR-020, FR-023, FR-038 · 원칙: VIII, X · design: §14 · 파일: `tests/e2e/integration.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 서버 mock 공급자로 5개 시나리오가 실제 라우트 경로에서 재현되는가?
@@ -692,22 +693,22 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
 **목표**: 요구사항·원칙·디자인 검토 기준을 예/아니오로 최종 점검하고 배포 가능 상태를 확인한다.
 **의존**: Phase 7 게이트(T115) 완료.
 
-- [ ] T116 [P] 금지 표현 자동 검사 테스트를 정리한다: 수치·퍼센트(V8), 나이·연령(V11), 나이·공백·이력 부재 관련 부정 근거(V9), 단정(V10)을 BP의 코퍼스(거부해야 할 문장 모음 + 통과해야 할 정상 문장 모음)로 검사하고, 페르소나 Mock·실제 결과 저장본에도 적용한다.
+- [X] T116 [P] 금지 표현 자동 검사 테스트를 정리한다: 수치·퍼센트(V8), 나이·연령(V11), 나이·공백·이력 부재 관련 부정 근거(V9), 단정(V10)을 BP의 코퍼스(거부해야 할 문장 모음 + 통과해야 할 정상 문장 모음)로 검사하고, 페르소나 Mock·실제 결과 저장본에도 적용한다.
   - 요구사항: FR-017, FR-018, SC-004, SC-005 · 원칙: IV, V · design: §24 · 파일: `tests/unit/banned-corpus.test.ts`
   - 검증: `npm run test`
   - 완료: 거부 코퍼스 전부가 거부되고 정상 코퍼스·저장된 결과 전부가 통과하는가?
 
-- [ ] T117 [P] 키보드 전용 E2E를 작성한다(마우스 없이): 메인 → "본문 바로가기" → "상담 시작하기" → 입력(모든 필드, 반복 추가·삭제, "없음" 선택, 아코디언) → 결과 생성 → 복사 → 인쇄 버튼 → 입력 수정하기 → 다시 생성. 모든 단계에서 포커스 표시를 확인한다.
+- [X] T117 [P] 키보드 전용 E2E를 작성한다(마우스 없이): 메인 → "본문 바로가기" → "상담 시작하기" → 입력(모든 필드, 반복 추가·삭제, "없음" 선택, 아코디언) → 결과 생성 → 복사 → 인쇄 버튼 → 입력 수정하기 → 다시 생성. 모든 단계에서 포커스 표시를 확인한다.
   - 요구사항: FR-027 · 원칙: XIII · design: §22, §26 · 파일: `tests/e2e/keyboard.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 마우스 없이 전체 흐름이 완료되고 각 포커스 요소에 윤곽선이 있는가?
 
-- [ ] T118 [P] 뷰포트 E2E를 완성한다(1440/1024/390px, 최소 360px): design §21 "크기별 완료 기준"(가로 스크롤 없음, 버튼 화면 안, 열 수)을 화면별로 검사한다. 추가: (1) **터치 영역** — 모든 `button`, `a`, `input`, `select`, `textarea`, 라디오·체크 박스, 접이식 제목의 `boundingBox` 높이가 44px 이상이고 인접 대상 사이 간격이 8px 이상(간격은 T069 승인 전제)인지 세 뷰포트에서 검사, (2) **사용 맥락**(design §6) — 1024px에서 결과 카드 본문이 17.5px이고 카드가 1열인지 검사.
+- [X] T118 [P] 뷰포트 E2E를 완성한다(1440/1024/390px, 최소 360px): design §21 "크기별 완료 기준"(가로 스크롤 없음, 버튼 화면 안, 열 수)을 화면별로 검사한다. 추가: (1) **터치 영역** — 모든 `button`, `a`, `input`, `select`, `textarea`, 라디오·체크 박스, 접이식 제목의 `boundingBox` 높이가 44px 이상이고 인접 대상 사이 간격이 8px 이상(간격은 T069 승인 전제)인지 세 뷰포트에서 검사, (2) **사용 맥락**(design §6) — 1024px에서 결과 카드 본문이 17.5px이고 카드가 1열인지 검사.
   - 요구사항: FR-027, FR-028 · 원칙: XIII, XIV · design: §6, §21, §22, §26 31번 · 파일: `tests/e2e/viewports.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 네 너비에서 가로 스크롤이 없고 열 구성이 design §21과 같으며, 모든 상호작용 요소가 44px 이상인가?
 
-- [ ] T119 [P] 움직임 감소 E2E를 작성한다(`reducedMotion: 'reduce'`): design §23 효과별 표의 9개 효과가 모두 정지·즉시 표시인지(`document.getAnimations()` 0개, smooth scroll 없음), Gradient·Grid Glow가 정적인지 검사한다.
+- [X] T119 [P] 움직임 감소 E2E를 작성한다(`reducedMotion: 'reduce'`): design §23 효과별 표의 9개 효과가 모두 정지·즉시 표시인지(`document.getAnimations()` 0개, smooth scroll 없음), Gradient·Grid Glow가 정적인지 검사한다.
   - 요구사항: FR-027 · 원칙: XIII · design: §10, §23 · 파일: `tests/e2e/reduced-motion.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 움직임 감소 설정에서 진행 중인 애니메이션이 0개인가?
@@ -717,17 +718,17 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
   - 검증: `npm run test:e2e`, 흑백 인쇄 수동 확인 기록
   - 완료: 인쇄 E2E가 통과하고 흑백 구분 수동 확인이 기록되었는가?
 
-- [ ] T121 [P] 빌드 결과물 API 키 검사를 만든다(`scripts/check-bundle-secrets.mjs`, `npm run check:secrets`): `dist/` 전체에서 (1) 환경 변수 `LLM_API_KEY`의 실제 값, (2) 공급자 키 접두사 패턴, (3) `LLM_API_KEY` 이름 문자열, (4) `server/` 코드 식별 문자열을 검색해 0건인지 확인한다. 네트워크 응답에도 키가 없음을 E2E로 확인.
+- [X] T121 [P] 빌드 결과물 API 키 검사를 만든다(`scripts/check-bundle-secrets.mjs`, `npm run check:secrets`): `dist/` 전체에서 (1) 환경 변수 `LLM_API_KEY`의 실제 값, (2) 공급자 키 접두사 패턴, (3) `LLM_API_KEY` 이름 문자열, (4) `server/` 코드 식별 문자열을 검색해 0건인지 확인한다. 네트워크 응답에도 키가 없음을 E2E로 확인.
   - 요구사항: FR-040 · 원칙: IX · design: - · 파일: `scripts/check-bundle-secrets.mjs`, `package.json`, `tests/e2e/secrets.spec.ts`
   - 검증: 의도적으로 키 문자열을 번들에 넣은 임시 빌드에서 검출되는지 확인
   - 완료: `npm run check:secrets`가 키·서버 코드 0건을 보고하는가?
 
-- [ ] T122 [P] 입력 비저장 검사를 만든다: (브라우저) 전체 흐름 후 `localStorage`, `sessionStorage`, 쿠키, IndexedDB, Cache Storage가 비어 있고 URL에 입력이 없는지 Playwright로 확인 / (서버) 로그 캡처 테스트(정상·잘못된 JSON·스키마 위반 요청 모두)와 Vercel 로그 수동 확인 기록(입력 본문·모델 응답·프롬프트가 없음) / (브라우저 콘솔) Playwright가 전체 흐름 동안 `console` 메시지를 수집해 입력 문자열이 없음을 확인.
+- [X] T122 [P] 입력 비저장 검사를 만든다: (브라우저) 전체 흐름 후 `localStorage`, `sessionStorage`, 쿠키, IndexedDB, Cache Storage가 비어 있고 URL에 입력이 없는지 Playwright로 확인 / (서버) 로그 캡처 테스트(정상·잘못된 JSON·스키마 위반 요청 모두)와 Vercel 로그 수동 확인 기록(입력 본문·모델 응답·프롬프트가 없음) / (브라우저 콘솔) Playwright가 전체 흐름 동안 `console` 메시지를 수집해 입력 문자열이 없음을 확인.
   - 요구사항: FR-025, FR-040 · 원칙: VI · design: - · 파일: `tests/e2e/storage.spec.ts`, `tests/contract/log.test.ts`
   - 검증: `npm run test:e2e`, `npm run test`
   - 완료: 전체 흐름 후 브라우저 저장소가 모두 비어 있고, 서버 로그와 브라우저 콘솔 메시지에 입력 값이 없는가?
 
-- [ ] T123 [P] 접근성 자동 점검을 모든 화면·상태에 실행한다(`@axe-core/playwright`): 메인, 입력(오류 상태 포함), 결과, 상태 화면 7종에서 위반 0건. 추가: **색상 외 표시** — 상태 배지·Alert·필드 오류·"확인 필요"·필수/선택·섹션 상태 요소마다 (a) 텍스트가 비어 있지 않고 (b) 아이콘 요소가 있는지 검사하고, 화면 전체에 `filter: grayscale(1)`을 적용한 스크린샷을 저장해 상태 구분이 가능한지 사람이 확인한다(design §18, §26 18번).
+- [X] T123 [P] 접근성 자동 점검을 모든 화면·상태에 실행한다(`@axe-core/playwright`): 메인, 입력(오류 상태 포함), 결과, 상태 화면 7종에서 위반 0건. 추가: **색상 외 표시** — 상태 배지·Alert·필드 오류·"확인 필요"·필수/선택·섹션 상태 요소마다 (a) 텍스트가 비어 있지 않고 (b) 아이콘 요소가 있는지 검사하고, 화면 전체에 `filter: grayscale(1)`을 적용한 스크린샷을 저장해 상태 구분이 가능한지 사람이 확인한다(design §18, §26 18번).
   - 요구사항: FR-027 · 원칙: XIII · design: §22 · 파일: `tests/e2e/a11y.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 모든 화면·상태에서 axe 위반이 0건이고 상태 요소마다 텍스트와 아이콘이 있는가?
@@ -752,7 +753,7 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
   - 검증: 배포 주소에서 사람이 수행
   - 완료: quickstart 5.2의 17개 항목이 배포 주소에서 모두 예이고, 공급자 사용 한도가 설정되었으며, 주소가 비공개로 관리되는 것이 `final-review.md`에 기록되었는가?
 
-- [ ] T128 [P] 금지 디자인 패턴 검사 E2E를 만든다(design §25): 결과·입력·메인 화면에 `%`·`progressbar`·`meter` 역할·게이지·진행 막대가 없음(입력 하단 바는 텍스트 진행만), 텍스트에 이모지가 없음, 카드·버튼의 `box-shadow`가 없음(하단 고정 바·인쇄 시트 예외), 카드 `border-radius` ≤ 6px, Header에 로그인·회원 영역 없음, 사람 인물 이미지 없음(`img`가 없거나 장식).
+- [X] T128 [P] 금지 디자인 패턴 검사 E2E를 만든다(design §25): 결과·입력·메인 화면에 `%`·`progressbar`·`meter` 역할·게이지·진행 막대가 없음(입력 하단 바는 텍스트 진행만), 텍스트에 이모지가 없음, 카드·버튼의 `box-shadow`가 없음(하단 고정 바·인쇄 시트 예외), 카드 `border-radius` ≤ 6px, Header에 로그인·회원 영역 없음, 사람 인물 이미지 없음(`img`가 없거나 장식).
   - 요구사항: FR-017, FR-027 · 원칙: IV, V, XI · design: §25, §26 19·33번 · 파일: `tests/e2e/forbidden-patterns.spec.ts`
   - 검증: `npm run test:e2e`
   - 완료: 금지 패턴 7종이 모든 화면에서 0건인가?
@@ -846,4 +847,4 @@ Phase 5(T091) → Phase 6 → [페르소나 5개 검증(T104)] → Phase 7 → P
 
 ## Phase 9: Convergence
 
-- [ ] T132 Playwright E2E를 콜드 스타트에도 안정적으로 만든다: 개발 서버를 처음 띄운 직후 첫 프로젝트(desktop-1440)에서 `flow.spec.ts` 8개(H1 포커스, `.job-card` 3개, 입력 수정, 요약 접힘, fail-once, limit, format, 뒤로 가기, 복사)가 실패하고 같은 테스트를 다시 실행하면 통과한다. `playwright.config.ts`의 `webServer`에 워밍업(첫 요청으로 mock 모듈과 `?mock=` 경로 선컴파일) 또는 대기 조건을 추가하고, `npm run test:e2e`를 새 서버에서 연속 2회 모두 통과시킨다 per Constitution XV, SC 완료 기준 "모든 테스트 성공" (partial)
+- [X] T132 Playwright E2E를 콜드 스타트에도 안정적으로 만든다: 개발 서버를 처음 띄운 직후 첫 프로젝트(desktop-1440)에서 `flow.spec.ts` 8개(H1 포커스, `.job-card` 3개, 입력 수정, 요약 접힘, fail-once, limit, format, 뒤로 가기, 복사)가 실패하고 같은 테스트를 다시 실행하면 통과한다. `playwright.config.ts`의 `webServer`에 워밍업(첫 요청으로 mock 모듈과 `?mock=` 경로 선컴파일) 또는 대기 조건을 추가하고, `npm run test:e2e`를 새 서버에서 연속 2회 모두 통과시킨다 per Constitution XV, SC 완료 기준 "모든 테스트 성공" (partial)

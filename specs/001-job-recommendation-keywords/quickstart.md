@@ -2,7 +2,7 @@
 
 **Feature**: `001-job-recommendation-keywords` | **작성일**: 2026-10-11
 **대상**: 개발 경험이 많지 않은 1인 개발자. 명령은 Windows PowerShell 기준이다.
-**지금 상태**: 코드가 아직 없다. 이 문서는 구현 후 그대로 따라 할 수 있게 쓴 절차이며, 아직 실행해 보지 않았다. 버전과 외부 서비스 화면은 바뀔 수 있으므로 어긋나면 각 서비스 공식 문서를 우선한다(확인 필요).
+**지금 상태**: 1단계 코드와 자동 검사는 구현되어 있다(`npm run check`, `npm run test:e2e`, `npm run audit:design`, `npm run check:secrets`). 5.2절의 실제 LLM 확인과 6절의 배포는 실제 API 키가 필요해 아직 실행하지 않았다. 버전과 외부 서비스 화면은 바뀔 수 있으므로 어긋나면 각 서비스 공식 문서를 우선한다(확인 필요).
 **구현 범위**: US1~US5. 로그인과 이력 저장은 없다(research 0절). 그러므로 **배포 주소를 공개하지 않는다**(6절).
 
 ---
@@ -49,7 +49,8 @@ RATE_LIMIT_WINDOW_SECONDS=600
 | `LLM_PROVIDER` | 사용할 공급자 | 개발·테스트에서만 `mock` 허용(가짜 응답). 프로덕션에서 `mock`이면 서버가 시작을 거부한다 |
 | `LLM_MODEL` | 모델 이름 | 품질이 부족하면 더 큰 모델로 바꾼다 |
 | `LLM_API_KEY` | API 키 | **`VITE_`로 시작하는 이름을 쓰지 않는다.** 그 접두사가 붙으면 브라우저로 노출된다(원칙 IX) |
-| `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS` | 요청 제한(초기값) | research 4절 |
+| `LLM_MOCK_MODE` | `LLM_PROVIDER=mock`일 때의 동작: `ok`(기본), `format-error`(형식 오류), `fail`(호출 실패), `slow`(지연, 시도당 55초 제한에 걸림) | 개발·테스트 전용. `npm run dev`는 `LLM_PROVIDER`가 없으면 `mock`으로 동작한다 |
+| `RATE_LIMIT_MAX`, `RATE_LIMIT_WINDOW_SECONDS` | 요청 제한(초기값 10분 20회) | research 4절. **서버 메모리 방식이라 인스턴스별 최선 노력이다**: 서버리스 인스턴스가 여러 개이거나 새로 뜨면 횟수가 초기화되어 완전하지 않다. 최종 방어선은 공급자 콘솔의 월 사용 한도다(`server/rate-limit.ts` 주석에도 같은 내용) |
 
 키가 코드나 채팅, 스크린샷에 노출되면 즉시 공급자 콘솔에서 폐기하고 새로 발급한다.
 
@@ -59,7 +60,7 @@ RATE_LIMIT_WINDOW_SECONDS=600
 npm run dev
 ```
 
-브라우저에서 http://localhost:3000 을 연다. 화면(메인 → 입력 → 결과)이 보이면 성공이다.
+브라우저에서 http://localhost:5173 을 연다. 화면(메인 → 입력 → 결과)이 보이면 성공이다.
 가짜 응답으로 먼저 확인하려면 `.env.local`의 `LLM_PROVIDER=mock`으로 바꾸고 다시 `npm run dev`를 실행한다(비용 없음).
 
 ## 5. 동작 확인 시나리오
@@ -71,7 +72,7 @@ npm run dev
 ```powershell
 npm run test          # Vitest: 스키마, 검증 규칙(V1~V13), 입력 보호, 복사 텍스트, 계약 테스트
 npm run build         # 타입과 빌드 확인
-npm run test:e2e      # Playwright: 1440·1024·390px, 인쇄 미디어, 접근성 자동 점검
+npm run test:e2e      # Playwright: 1440·1024·390px, 키보드·터치·움직임 감소·인쇄·접근성·금지 패턴, 서버 mock 통합(integration 프로젝트, 포트 5174·5175 개발 서버를 자동으로 띄움)
 ```
 
 테스트나 빌드가 실패하면 그 작업은 완료로 표시하지 않는다(원칙 XV).
@@ -100,7 +101,7 @@ npm run test:e2e      # Playwright: 1440·1024·390px, 인쇄 미디어, 접근�
 | 16 | 서버 터미널 로그에 구직자 입력 내용이 없는가? | 원칙 VI |
 | 17 | 새로고침하면 결과가 사라지고 "빈 화면"이 나오는가? | FR-025 |
 
-실패·지연·제한 화면은 개발 환경에서 `LLM_PROVIDER=mock`의 지연·실패 모드(구현 시 환경 변수로 제공)로 일으킨다. 제한 화면은 `RATE_LIMIT_MAX=2`로 낮춰 3번째 요청에서 확인한다.
+실패·지연·제한 화면은 개발 환경에서 `LLM_PROVIDER=mock`의 `LLM_MOCK_MODE`(`format-error`·`fail`·`slow`)로 일으키거나, 화면만 볼 때는 주소에 `?mock=fail|format|limit|timeout|slow|fail-once`를 붙인다(개발 모드에서만 동작하며 프로덕션 번들에는 없다). 제한 화면은 `RATE_LIMIT_MAX=2`로 낮춰 3번째 요청에서 확인한다.
 
 ### 5.3 화면 크기와 접근성 (design 26절)
 

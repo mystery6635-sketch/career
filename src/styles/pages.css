@@ -948,3 +948,38 @@
 .print-notice {
   display: none;
 }
+
+/* ---------- 오류 요약 (design §12) ---------- */
+.error-summary {
+  margin-bottom: var(--space-24);
+  padding: var(--space-16) var(--space-20);
+  background: var(--card);
+  border: 2px solid var(--err);
+  border-radius: var(--radius);
+}
+
+.error-summary:focus {
+  outline: 3px solid var(--focus-light);
+  outline-offset: 3px;
+}
+
+.error-summary__title {
+  color: var(--err);
+  font-size: var(--fs-card-body);
+  font-weight: 700;
+}
+
+.error-summary__list {
+  margin: var(--space-8) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.error-summary__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  color: var(--err);
+  font-size: var(--fs-hint);
+  text-decoration: underline;
+}

@@ -33,6 +33,12 @@ export default function ResultPage() {
   const h1 = useRouteFocus(title, { focus: showResult })
   const step = useAnalysisStep(busy)
 
+  // 서버가 입력을 거부했으면(VALIDATION_FAILED·PII_DETECTED) 입력 화면에서 항목별 오류로 보여 준다(T108).
+  const rejectedInput = status === 'error' && (state.error?.code === 'VALIDATION_FAILED' || state.error?.code === 'PII_DETECTED')
+  useEffect(() => {
+    if (rejectedInput) navigate('/input', { replace: true })
+  }, [rejectedInput, navigate])
+
   // 분석 중에 화면을 떠나면(뒤로 가기 등) 요청을 중단하고 결과를 폐기한다. 입력은 유지된다(design §5).
   // 개발 모드의 StrictMode가 일으키는 가짜 정리(곧바로 다시 마운트)에는 반응하지 않도록 한 틱 미룬다.
   const busyRef = useRef(busy)

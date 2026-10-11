@@ -1,12 +1,13 @@
 import { INPUT_PAGE } from '@shared/messages'
 import { emptyTraining } from '../../state/draft'
-import type { Training } from '@shared/types'
+import type { Training } from '@shared/schema'
+import { fieldProps } from '../../state/validation'
 import { Input } from '../ui/Input'
 import { NoneChoice } from './NoneChoice'
 import { RepeatableRows } from './RepeatableRows'
 import type { SectionProps } from './BasicInfoSection'
 
-export function CertTrainingSection({ draft, onChange }: SectionProps) {
+export function CertTrainingSection({ draft, onChange, feedback }: SectionProps) {
   return (
     <div className="form-stack">
       <div className="group">
@@ -33,6 +34,7 @@ export function CertTrainingSection({ draft, onChange }: SectionProps) {
                 <Input
                   label={`${INPUT_PAGE.certLabel} ${i + 1}`}
                   hideLabel
+                  {...fieldProps(feedback, `certifications.${i}`)}
                   maxLength={100}
                   value={value}
                   onChange={(e) => update(e.target.value)}
@@ -67,6 +69,7 @@ export function CertTrainingSection({ draft, onChange }: SectionProps) {
                 <div className="form-grid" role="group" aria-label={`${INPUT_PAGE.trainingRow} ${i + 1}`}>
                   <Input
                     label={INPUT_PAGE.trainingFields.courseName}
+                    {...fieldProps(feedback, `trainings.${i}.courseName`)}
                     placeholder={INPUT_PAGE.trainingPlaceholders.courseName}
                     maxLength={100}
                     value={training.courseName}
@@ -74,6 +77,7 @@ export function CertTrainingSection({ draft, onChange }: SectionProps) {
                   />
                   <Input
                     label={INPUT_PAGE.trainingFields.period}
+                    {...fieldProps(feedback, `trainings.${i}.period`)}
                     placeholder={INPUT_PAGE.trainingPlaceholders.period}
                     maxLength={50}
                     value={training.period}

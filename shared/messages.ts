@@ -303,3 +303,49 @@ export const FIELD_LABELS = {
   training: '교육이수',
   strength: '강점',
 } as const
+
+// ---------- 입력 검증 문구 (design §12 확정 문구 + data-model 1.1, 1.3) ----------
+
+export const INPUT_ERRORS = {
+  ageNotNumber: '나이를 숫자로 입력해 주세요.',
+  ageRange: '나이는 15~99 사이의 숫자로 입력해 주세요.',
+  level: '최종학력을 선택해 주세요.',
+  status: '학력 상태를 선택해 주세요.',
+  careerRequired: '경력을 입력하거나 “경력 없음”을 선택해 주세요.',
+  careerFields: '경력의 직무명·업종·기간을 모두 입력해 주세요. 비어 있는 칸이 있어요.',
+  careerExclusive: '“경력 없음”을 선택하면 경력을 입력할 수 없어요.',
+  internChoice: '인턴 경험이 있는지 선택해 주세요.',
+  internContent: '인턴 내용을 입력해 주세요.',
+  internPeriod: '인턴 기간을 입력해 주세요.',
+  majorRequired: '전공을 입력해 주세요.',
+  certRequired: '자격증 이름을 입력해 주세요.',
+  certExclusive: '“자격증 없음”을 선택하면 자격증을 입력할 수 없어요.',
+  trainingFields: '교육이수의 과정명과 기간을 모두 입력해 주세요. 비어 있는 칸이 있어요.',
+  trainingExclusive: '“교육이수 없음”을 선택하면 교육이수를 입력할 수 없어요.',
+  strengthsCount: '강점은 정확히 3개가 필요해요.',
+  pii: '이름·연락처 같은 개인 식별 정보는 입력하지 않아요. 해당 부분을 지워 주세요.',
+  injection: 'AI에게 내리는 지시문처럼 보이는 내용이 있어요. 구직자의 이력만 적어 주세요.',
+  bodyInvalid: '요청 형식이 올바르지 않아요.',
+  serverRecheck: '이 항목을 다시 확인해 주세요.',
+} as const
+
+/** 오류 요약 제목(design §12). */
+export function errorSummaryTitle(count: number): string {
+  return `입력 내용을 확인해 주세요. 고칠 항목이 ${count}개 있어요.`
+}
+
+export function strengthRequired(n: number): string {
+  return `강점 ${n}을 입력해 주세요. 강점은 정확히 3개가 필요해요.`
+}
+
+export function strengthTooShort(n: number): string {
+  return `강점 ${n}을 2자 이상 적어 주세요.`
+}
+
+export function strengthDuplicate(n: number, m: number): string {
+  return `강점 ${n}이 강점 ${m}과 같아요. 서로 다른 강점을 적어 주세요.`
+}
+
+export function maxChars(max: number): string {
+  return `최대 ${max}자까지 입력할 수 있어요.`
+}

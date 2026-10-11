@@ -1,5 +1,5 @@
 import { RESULT_PAGE } from '@shared/messages'
-import type { ResultKeyword } from '@shared/types'
+import type { ResultKeyword } from '@shared/schema'
 import { Tag } from '../ui/Tag'
 import { Sentences } from './ConfirmNeeded'
 import { Label } from './Label'
