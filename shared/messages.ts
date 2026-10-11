@@ -334,16 +334,19 @@ export function errorSummaryTitle(count: number): string {
   return `입력 내용을 확인해 주세요. 고칠 항목이 ${count}개 있어요.`
 }
 
+// 강점 번호(1~3)에 붙는 조사. 받침 유무: 1(일)·3(삼)은 있고 2(이)는 없다.
+const hasBatchim = (n: number): boolean => n !== 2
+
 export function strengthRequired(n: number): string {
-  return `강점 ${n}을 입력해 주세요. 강점은 정확히 3개가 필요해요.`
+  return `강점 ${n}${hasBatchim(n) ? '을' : '를'} 입력해 주세요. 강점은 정확히 3개가 필요해요.`
 }
 
 export function strengthTooShort(n: number): string {
-  return `강점 ${n}을 2자 이상 적어 주세요.`
+  return `강점 ${n}${hasBatchim(n) ? '을' : '를'} 2자 이상 적어 주세요.`
 }
 
 export function strengthDuplicate(n: number, m: number): string {
-  return `강점 ${n}이 강점 ${m}과 같아요. 서로 다른 강점을 적어 주세요.`
+  return `강점 ${n}${hasBatchim(n) ? '이' : '가'} 강점 ${m}${hasBatchim(m) ? '과' : '와'} 같아요. 서로 다른 강점을 적어 주세요.`
 }
 
 export function maxChars(max: number): string {

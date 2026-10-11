@@ -65,6 +65,7 @@
 | @fontsource/* | IBM Plex Sans KR·Plex Mono 자체 호스팅(라이선스 확인 필요) | 무료 |
 | Tailwind CSS | 지정 스택, 토큰 반영 | 무료 |
 | Zod | 지정 스택, 이중 검증 | 무료 |
+| @supabase/supabase-js | 2단계(로그인·이력 저장, FR-030~035) 준비. 1단계 코드에서는 import하지 않으며 번들에 포함되지 않는다(E-4 승인). 공개 anon 키만 `VITE_` 변수로 쓰고 service_role은 두지 않는다 | 무료 플랜 |
 | LLM 공급자 SDK | 서버에서 LLM 호출. 직접 HTTP 호출로 대체 가능하나 오류 처리 단순화 | SDK 무료, **API 사용료 발생(확인 필요)** |
 | Vitest, @testing-library/react, jsdom | 지정 스택(Vitest), 컴포넌트 단위 테스트 | 무료 |
 | Playwright | 지정 스택, 뷰포트·인쇄 E2E | 무료 |

@@ -101,7 +101,7 @@ Phase 8 ◀─ Phase 7 ◀─ (Phase 6 서버 라우트가 페르소나 5개 검
   - 검증: `npm run dev` 후 `curl -X POST http://localhost:5173/api/generate`가 501 JSON을 반환. Vercel 함수 진입 형식(웹 표준 export 지원 여부, ESM 확장자 규칙)은 **확인 필요**이므로 T011에서 배포 확인
   - 완료: 로컬과 배포 환경에서 `/api/generate`가 같은 핸들러 응답을 반환하는가?
 
-- [ ] T011 Phase 1 게이트: Git 저장소 초기화 여부와 `.gitignore`를 확인하고, Vercel 미리보기 배포로 정적 페이지와 `/api/generate`(501) 응답, SPA 경로 직접 접속을 확인한다.
+- [X] T011 Phase 1 게이트: Git 저장소 초기화 여부와 `.gitignore`를 확인하고, Vercel 미리보기 배포로 정적 페이지와 `/api/generate`(501) 응답, SPA 경로 직접 접속을 확인한다.
   - 요구사항: - · 원칙: IX, XV · design: - · 파일: (없음, 확인 작업)
   - 검증: `npm run check`, 미리보기 배포 주소 확인, 배포 로그에서 빌드 성공 확인
   - 완료: `npm run check`가 통과하고 미리보기에서 정적 페이지와 서버리스 함수가 모두 응답하는가?
