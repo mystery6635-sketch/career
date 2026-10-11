@@ -1,0 +1,30 @@
+/* design §15 / contracts/copy-and-print.md 2절. 결과 화면 전용 배치는 T063. */
+
+@page {
+  size: A4;
+  margin: 14mm;
+}
+
+@media print {
+  html,
+  body {
+    background: none !important;
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+    line-height: var(--lh-print);
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-box {
+    border: 1px solid var(--print-ink);
+    break-inside: avoid;
+  }
+
+  * {
+    background-color: transparent !important;
+    box-shadow: none !important;
+  }
+}

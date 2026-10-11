@@ -1,0 +1,725 @@
+/* 공통 컴포넌트 스타일. 색·간격·글자 크기는 tokens.css의 변수만 쓴다. */
+
+/* ---------- 공통 카드 면: 흰 배경 + 1px 테두리 + 6px 반경, 그림자 없음(design §20) ----------
+   Card와 같은 면을 쓰는 요소는 여기에 모은다. 변형(영역 A/B, 직업 카드의 연회색)은 각자의 규칙이 덮어쓴다. */
+.card,
+.rows__row,
+.form-section,
+.flow__item,
+.item-card,
+.input-summary {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* ---------- 공통 카드 면: 흰 배경 + 1px 테두리 + 6px 반경, 그림자 없음(design §20) ----------
+   Card와 같은 면을 쓰는 요소는 여기에 모은다. 변형(영역 A/B, 직업 카드의 연회색)은 각자의 규칙이 덮어쓴다. */
+.card,
+.rows__row,
+.form-section,
+.flow__item,
+.item-card,
+.input-summary {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+/* ---------- Header ---------- */
+.header {
+  background: var(--navy-950);
+  color: var(--card);
+}
+
+.header[data-variant='overlay'] {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  background: transparent;
+}
+
+.header__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-12) var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+}
+
+.header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-10);
+  min-height: var(--touch-min);
+  color: var(--card);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header__mark {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}
+
+.header__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-min);
+  padding: 0 var(--space-16);
+  color: var(--card);
+  border: 1px solid color-mix(in srgb, var(--card) 45%, transparent);
+  border-radius: var(--radius);
+  font-size: var(--fs-btn);
+  text-decoration: none;
+}
+
+/* ---------- Page Header ---------- */
+.page-header__kicker {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--fs-kicker);
+  letter-spacing: 0.08em;
+  color: var(--teal-700);
+}
+
+.page-header__title {
+  font-size: var(--fs-page-title);
+  font-weight: 700;
+  margin-top: var(--space-6);
+}
+
+.page-header__subtitle {
+  margin-top: var(--space-10);
+  max-width: var(--measure-subtitle);
+  color: var(--muted);
+}
+
+/* ---------- Button ---------- */
+.btn-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: var(--btn-h);
+  padding: 0 var(--space-24);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: var(--fs-btn);
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn[data-size='sm'] {
+  min-height: var(--btn-h-sm);
+  padding: 0 var(--space-16);
+  font-size: var(--fs-16);
+}
+
+.btn[data-variant='mint'] {
+  background: var(--mint);
+  color: var(--mint-ink);
+}
+
+.btn[data-variant='ghost'] {
+  background: transparent;
+  color: var(--card);
+  border-color: color-mix(in srgb, var(--card) 55%, transparent);
+}
+
+.btn[data-variant='teal'] {
+  background: var(--teal-700);
+  color: var(--card);
+}
+
+.btn[data-variant='outline'] {
+  background: var(--card);
+  color: var(--navy-900);
+  border-color: var(--navy-900);
+}
+
+.btn[data-variant='danger'] {
+  background: var(--card);
+  color: var(--err);
+  border-color: var(--err);
+}
+
+.btn[data-variant='add'] {
+  background: var(--card);
+  color: var(--teal-800);
+  border: 1.5px dashed var(--teal-700);
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn__icon {
+  flex: none;
+}
+
+.btn[aria-disabled='true'] {
+  pointer-events: none;
+}
+
+.btn-wrap__reason {
+  font-size: var(--fs-hint);
+  color: var(--muted);
+}
+
+@media (max-width: 767px) {
+  .btn[data-block='true'] {
+    width: 100%;
+  }
+}
+
+/* ---------- Field / Input / Textarea / Select ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.field__label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+}
+
+.field__req {
+  margin-left: var(--space-6);
+  font-weight: 700;
+  color: var(--teal-800);
+}
+
+.field__req[data-kind='optional'] {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.field__hint {
+  font-size: var(--fs-hint);
+  color: var(--muted);
+}
+
+.field__count {
+  font-size: var(--fs-count);
+  color: var(--muted);
+}
+
+.field__error,
+.field__warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-10);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-hint);
+  font-weight: 600;
+}
+
+.field__error {
+  background: var(--err-bg);
+  color: var(--err);
+}
+
+.field__warning {
+  background: var(--need-bg);
+  color: var(--need-ink);
+}
+
+.field__msg-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  background: currentcolor;
+  font-size: var(--fs-13);
+  line-height: 1;
+}
+
+.field__msg-icon > span {
+  color: var(--card);
+}
+
+.control {
+  width: 100%;
+  min-height: var(--field-h);
+  padding: var(--space-8) var(--space-14);
+  background: var(--card);
+  color: var(--ink);
+  border: 1.5px solid var(--field);
+  border-radius: var(--radius);
+  font: inherit;
+  font-size: var(--fs-body);
+  box-sizing: border-box;
+}
+
+.control:focus {
+  border-color: var(--focus-light);
+}
+
+.control[aria-invalid='true'] {
+  border: 2px solid var(--err);
+  background: var(--err-bg);
+}
+
+.control:disabled {
+  border-style: dashed;
+  background: var(--surface);
+  color: var(--muted);
+}
+
+textarea.control {
+  resize: vertical;
+  min-height: calc(var(--field-h) * 2);
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  appearance: none;
+  padding-right: var(--space-40);
+}
+
+.select-wrap__arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--navy-900);
+}
+
+/* ---------- Radio / Checkbox ---------- */
+.choice {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  min-height: var(--field-h);
+  padding: 0 var(--space-14);
+  background: var(--card);
+  border: 1.5px solid var(--field);
+  border-radius: var(--radius);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.choice:has(input:checked) {
+  background: color-mix(in srgb, var(--teal-700) 10%, var(--card));
+  border-color: var(--teal-700);
+}
+
+.choice:has(input:focus-visible) {
+  outline: 3px solid var(--focus-light);
+  outline-offset: 3px;
+}
+
+.choice:has(input:disabled) {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.choice__input {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--teal-700);
+  flex: none;
+}
+
+.choice__mark {
+  color: var(--teal-800);
+  font-weight: 700;
+  visibility: hidden;
+}
+
+.choice:has(input:checked) .choice__mark {
+  visibility: visible;
+}
+
+/* ---------- Badge ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: var(--badge-h);
+  padding: 0 var(--space-12) 0 var(--space-6);
+  border: 1.5px solid;
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-15);
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.badge__chip {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  color: var(--card);
+  font-size: var(--fs-14);
+  line-height: 1;
+}
+
+.badge[data-variant='progress'] {
+  background: color-mix(in srgb, var(--teal-700) 10%, var(--card));
+  border-color: var(--teal-700);
+  color: var(--teal-800);
+}
+
+.badge[data-variant='progress'] .badge__chip {
+  background: var(--teal-700);
+}
+
+.badge[data-variant='error'] {
+  background: var(--err-bg);
+  border-color: var(--err);
+  color: var(--err);
+}
+
+.badge[data-variant='error'] .badge__chip {
+  background: var(--err);
+}
+
+.badge[data-variant='warning'] {
+  background: var(--need-bg);
+  border-color: var(--need-bd);
+  color: var(--need-ink);
+}
+
+.badge[data-variant='warning'] .badge__chip {
+  background: var(--need-ink);
+}
+
+.badge[data-variant='info'] {
+  background: var(--soft-bg);
+  border-color: var(--soft-bd);
+  color: var(--soft-ink);
+}
+
+.badge[data-variant='info'] .badge__chip {
+  background: var(--soft-ink);
+}
+
+/* "확인 필요" 배지: 반경 3px, 갈색 글자, 노란 테두리, 왼쪽 갈색 정사각 칩 "?" */
+.badge[data-variant='confirm'] {
+  min-height: 28px;
+  padding: 0 var(--space-10) 0 var(--space-4);
+  gap: var(--space-6);
+  background: var(--need-bg);
+  border: 1px solid var(--need-bd);
+  border-radius: var(--radius-xs);
+  color: var(--need-ink);
+  font-size: var(--fs-14);
+}
+
+.badge[data-variant='confirm'] .badge__chip {
+  width: 20px;
+  height: 20px;
+  background: var(--need-ink);
+  border-radius: 2px;
+  font-size: var(--fs-13);
+}
+
+/* ---------- Tag ---------- */
+.tag {
+  display: inline-block;
+  padding: var(--space-3) var(--space-10);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-tag-value);
+}
+
+.tag__name {
+  color: var(--teal-800);
+  font-weight: 700;
+  font-size: var(--fs-tag-name);
+}
+
+/* ---------- Card ---------- */
+.card {
+  padding: var(--card-pad);
+  box-sizing: border-box;
+}
+
+.card[data-variant='inset'] {
+  background: var(--surface);
+}
+
+.card[data-variant='areaA'] {
+  border-top: 5px solid var(--teal-700);
+}
+
+.card[data-variant='areaB'] {
+  background: var(--area-b-bg);
+  border-top: 5px solid var(--navy-900);
+}
+
+.card__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin-bottom: var(--space-8);
+  border-radius: var(--radius-sm);
+  background: var(--teal-700);
+  color: var(--card);
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.card[data-variant='areaB'] .card__chip {
+  background: var(--navy-900);
+}
+
+/* ---------- Alert ---------- */
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-16);
+  border: 1.5px solid;
+  border-radius: var(--radius);
+}
+
+.alert__icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  color: var(--card);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.alert__title {
+  font-weight: 700;
+}
+
+.alert[data-variant='info'] {
+  background: var(--soft-bg);
+  border-color: var(--soft-bd);
+  color: var(--soft-ink);
+}
+
+.alert[data-variant='info'] .alert__icon {
+  background: var(--soft-ink);
+}
+
+.alert[data-variant='warning'] {
+  background: var(--need-bg);
+  border-color: var(--need-bd);
+  color: var(--need-ink);
+}
+
+.alert[data-variant='warning'] .alert__icon {
+  background: var(--need-ink);
+}
+
+.alert[data-variant='error'] {
+  background: var(--err-bg);
+  border-color: var(--err);
+  color: var(--err);
+}
+
+.alert[data-variant='error'] .alert__icon {
+  background: var(--err);
+}
+
+.alert[data-variant='success'] {
+  background: var(--card);
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.alert[data-variant='success'] .alert__icon {
+  background: var(--success);
+}
+
+/* ---------- 반복 입력 / 없음 선택지 ---------- */
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-item-gap);
+}
+
+.rows[data-disabled='true'] {
+  border: 1.5px dashed var(--field);
+  border-radius: var(--radius);
+  padding: var(--space-12);
+}
+
+.rows__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  padding: var(--space-14);
+}
+
+.rows__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--touch-gap);
+}
+
+.rows__label {
+  font-weight: 600;
+}
+
+.rows__reason {
+  font-size: var(--fs-hint);
+  color: var(--muted);
+}
+
+fieldset.reset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+/* ---------- 상태 화면 / 복사 알림 ---------- */
+.status-card {
+  width: 100%;
+  max-width: var(--status-card-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-16);
+  /* 수정안 H-4: 카드 표면(Card와 같은 면), 안쪽 여백 --space-32. */
+  box-sizing: border-box;
+  padding: var(--space-32);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.status-card > p {
+  color: var(--muted);
+}
+
+.status-card__title {
+  font-size: var(--fs-status-h1);
+  font-weight: 700;
+}
+
+.status-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--touch-gap);
+}
+
+@media (max-width: 767px) {
+  .status-card__actions {
+    flex-direction: column;
+    align-self: stretch;
+  }
+
+  .status-card__actions .btn {
+    width: 100%;
+  }
+}
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.steps__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.steps__state {
+  margin-left: auto;
+  font-size: var(--fs-hint);
+  font-weight: 700;
+}
+
+.steps__icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--navy-900);
+  color: var(--card);
+  font-size: var(--fs-13);
+}
+
+/* ---------- 개발 갤러리 ---------- */
+.gallery {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--space-24) var(--gutter) var(--space-64);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+}
+
+.gallery__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--touch-gap);
+  align-items: flex-start;
+}
+
+.gallery__dark {
+  padding: var(--space-16);
+  background: var(--navy-950);
+}
+
+.gallery__stack {
+  display: grid;
+  gap: var(--space-12);
+  max-width: 640px;
+}
+
+.gallery__stack--form {
+  gap: var(--form-item-gap);
+  max-width: 560px;
+}
+
+.gallery__stack--wide {
+  gap: var(--space-40);
+}
+
+.gallery__cards {
+  display: grid;
+  gap: var(--card-gap);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}

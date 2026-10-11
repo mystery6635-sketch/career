@@ -1,0 +1,295 @@
+/* 결과 화면 인쇄 레이아웃(contracts/copy-and-print.md 2절, design §15).
+   기본 인쇄 규칙(@page, .no-print, 배경 제거)은 print.css에 있다.
+   배경색 없이 굵기·테두리·번호로 구분한다. 색은 --print-ink/--print-paper만 쓴다.
+   최악 입력(한도를 모두 채운 결과)의 쪽수는 phase3-review.md에 기록한다. */
+
+@media print {
+  .header,
+  .skip-link,
+  .notice-bar {
+    display: none !important;
+  }
+
+  .page-wrap {
+    max-width: none;
+    padding: 0;
+    gap: 3pt;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .result-page {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 제목 → 안내 상자(화면의 상단 고정 바 대신 인쇄에서만 보이는 상자) → A → B → 하단 안내문 */
+  .print-notice {
+    display: block;
+    border: 2pt solid var(--print-ink);
+    padding: 3pt 6pt;
+    font-size: var(--fs-print);
+    line-height: var(--lh-print);
+  }
+
+  .page-header__kicker,
+  .page-header__subtitle {
+    display: none;
+  }
+
+  .page-header__title {
+    margin: 0;
+    padding-bottom: 1pt;
+    border-bottom: 3pt solid var(--print-ink);
+    font-size: 14pt;
+  }
+
+  /* 영역 A/B */
+  .card {
+    padding: 0;
+    border-radius: 0;
+  }
+
+  .card,
+  .card[data-variant] {
+    border: 0;
+    border-top: 0;
+  }
+
+  .card[data-variant='areaA'] .area-title {
+    padding: 3pt 6pt;
+    background: var(--print-ink) !important;
+    color: var(--print-paper);
+    font-size: 11pt;
+  }
+
+  .card[data-variant='areaB'] {
+    padding: 2pt 4pt;
+    border: 2pt solid var(--print-ink);
+    border-left: 6pt solid var(--print-ink);
+  }
+
+  .card[data-variant='areaB'] .area-title {
+    font-size: 11pt;
+  }
+
+  .card__chip,
+  .area-sub {
+    display: none;
+  }
+
+  .area-title {
+    margin: 0;
+  }
+
+  .card-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+    margin-top: 2pt;
+  }
+
+  /* 항목 상자: 1px 검은 테두리, 페이지 중간에서 끊기지 않음 */
+  .item-card {
+    padding: 2pt 5pt;
+    gap: 0;
+    border: 1px solid var(--print-ink);
+    border-radius: 0;
+    font-size: var(--fs-print);
+    line-height: var(--lh-print);
+    break-inside: avoid;
+  }
+
+  .item-card__no {
+    margin: 0;
+    color: var(--print-ink);
+    font-size: 8pt;
+    line-height: 1.2;
+  }
+
+  .item-card__title {
+    margin: 0;
+    font-size: 10.5pt;
+    line-height: 1.3;
+  }
+
+  .item-card__sub {
+    display: inline;
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+  }
+
+  /* 굵은 라벨: "근거 · ", "연결 항목 · ", "상담에서 함께 확인할 점 · " */
+  .field-block,
+  .check-point {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .label {
+    display: inline;
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+  }
+
+  .label__screen {
+    display: none;
+  }
+
+  .label__print {
+    display: inline;
+    font-weight: 700;
+  }
+
+  .sentences {
+    max-width: none;
+  }
+
+  .field-block > .sentences,
+  .check-point > .sentences,
+  .tag-list,
+  .tag-list li {
+    display: inline;
+  }
+
+  .tag-list li:not(:last-child)::after {
+    content: ', ';
+  }
+
+  .tag {
+    padding: 0;
+    border: 0;
+    font-size: var(--fs-print);
+  }
+
+  .tag__name {
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+  }
+
+  /* 통용 직업명: 배지 대신 대괄호 글자 */
+  .item-card__badge {
+    margin: 0;
+  }
+
+  .item-card__badge .badge {
+    display: inline;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+    font-weight: 700;
+  }
+
+  .item-card__badge .badge__chip {
+    display: none;
+  }
+
+  .item-card__badge .badge span:last-child::before {
+    content: '[';
+  }
+
+  .item-card__badge .badge span:last-child::after {
+    content: ']';
+  }
+
+  /* 확인 필요: [확인 필요] 글자 + 왼쪽 이중선 + 이탤릭 */
+  .confirm {
+    display: inline;
+    padding: 0 0 0 4pt;
+    border: 0;
+    border-left: 4pt double var(--print-ink);
+    background: none;
+    color: var(--print-ink);
+    font-style: italic;
+  }
+
+  .confirm__badge {
+    display: none;
+  }
+
+  .confirm__print {
+    display: inline;
+    font-weight: 700;
+  }
+
+  /* 불일치 안내: 점선 구분선 + "함께 이야기 나눠 볼 점" 라벨 */
+  .mismatch {
+    display: block;
+    margin: 0;
+    padding: 3pt 0 0;
+    border: 0;
+    border-top: 1px dashed var(--print-ink);
+    border-radius: 0;
+    background: none;
+    color: var(--print-ink);
+  }
+
+  .mismatch__icon,
+  .mismatch__title .label__screen,
+  .reinforce-tag {
+    display: none;
+  }
+
+  .mismatch__title,
+  .mismatch__title .label__print,
+  .mismatch__text {
+    display: inline;
+  }
+
+  .mismatch__title .label__print {
+    font-weight: 700;
+  }
+
+  .def-list {
+    display: block;
+  }
+
+  .def-list > div {
+    display: inline;
+    margin-right: 8pt;
+  }
+
+  .def-list dt,
+  .def-list dd {
+    display: inline;
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+  }
+
+  .def-list dt::after {
+    content: ' · ';
+  }
+
+  .def-list dd::after {
+    content: '';
+  }
+
+  /* 범례와 하단 안내문 */
+  .legend {
+    margin: 0;
+    color: var(--print-ink);
+    font-size: var(--fs-print);
+  }
+
+  .legend__badge,
+  .legend__screen {
+    display: none;
+  }
+
+  .legend__print {
+    display: inline;
+  }
+
+  .notice-bottom {
+    padding: 3pt 6pt;
+    border: 2pt solid var(--print-ink);
+    border-radius: 0;
+    font-size: var(--fs-print);
+  }
+}

@@ -1,0 +1,22 @@
+node_modules
+dist
+.vercel
+.env
+.env.local
+.env*.local
+test-results
+playwright-report
+*.log
+.DS_Store
+Thumbs.db
+
+dist-lib
+ds-bundle
+.ds-sync
+.design-sync/.cache
+.design-sync/learnings
+.design-sync/node_modules
+
+# OMC 도구 세션 상태
+.omc/
+**/.omc/

@@ -1,0 +1,18 @@
+{
+  "pkg": "initial-counseling-helper",
+  "globalName": "CounselingUi",
+  "shape": "package",
+  "buildCmd": "npm run build:lib",
+  "cssEntry": "dist-lib/style.css",
+  "extraEntries": [
+    "react-router-dom"
+  ],
+  "provider": {
+    "component": "MemoryRouter"
+  },
+  "extraFonts": [
+    ".design-sync/fonts.css"
+  ],
+  "projectId": "3ac3bcdf-2500-4c53-ab59-5c0646b19f18",
+  "readmeHeader": ".design-sync/conventions.md"
+}

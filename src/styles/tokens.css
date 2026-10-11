@@ -1,0 +1,191 @@
+/* 디자인 토큰. 값의 출처는 design.md §16(색), §17(글자), §19(간격), §20(크기), §21(분기).
+   간격은 4px/8px 척도로 정리하지 않고 시안 값을 그대로 쓴다(design §19 결정). */
+
+:root {
+  /* 색 (design §16) */
+  --navy-950: #07111f;
+  --navy-900: #0b1b2e;
+  --navy-800: #12283f;
+  --teal-700: #0e5c63;
+  --teal-800: #0a4a50;
+  --green-700: #1b6b52;
+  --mint: #5be0c0;
+  --mint-ink: #062b2a;
+  --surface: #f3f6f8;
+  --card: #ffffff;
+  --ink: #0b1b2e;
+  --muted: #41536a;
+  --rule: #cbd5df;
+  --field: #6b7f95;
+  --err: #b42318;
+  --err-bg: #fdecec;
+  --need-bg: #fff3d6;
+  --need-bd: #c79a2e;
+  --need-ink: #6b4200;
+  --soft-bg: #e8eff8;
+  --soft-bd: #7f9cc4;
+  --soft-ink: #16345f;
+  --focus-light: #0b1b2e;
+  --focus-dark: #ffd166;
+  /* design §18 */
+  --success: #14502b;
+  --area-b-bg: #e4ecf2;
+
+  /* 글꼴 (design §17) */
+  --font-sans: 'IBM Plex Sans KR', 'Noto Sans KR', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* 글자 크기와 줄 간격 (design §17) */
+  --fs-body: 17px;
+  --lh-body: 1.65;
+  --fs-hero-h1: clamp(36px, 5.2vw, 60px);
+  --lh-hero-h1: 1.18;
+  --fs-hero-sub: 19px;
+  --lh-hero-sub: 1.7;
+  --fs-h2: clamp(26px, 3.4vw, 36px);
+  --fs-page-title: clamp(28px, 3.4vw, 36px);
+  --fs-status-h1: 28px;
+  --fs-area-title: 24px;
+  --fs-card-title: 24px;
+  --fs-card-body: 16.5px;
+  --lh-card-body: 1.75;
+  --fs-label: 16.5px;
+  --fs-hint: 14.5px;
+  --fs-count: 13.5px;
+  --fs-tag-name: 13px;
+  --fs-tag-value: 15px;
+  --fs-kicker: 14px;
+  --fs-btn: 17px;
+  --fs-print: 9.5pt;
+  --lh-print: 1.45;
+
+  /* 폭과 간격 (design §19) */
+  --content-max: 1176px;
+  --gutter: 32px;
+  --section-y: 84px;
+  --hero-top: 132px;
+  --hero-bottom: 88px;
+  --card-pad: 24px;
+  --card-gap: 18px;
+  --form-section-gap: 20px;
+  --form-item-gap: 22px;
+  --status-card-w: 680px;
+  --print-sheet-w: 794px;
+  --measure-subtitle: 38em;
+  --measure-hero: 34em;
+  --measure-card-body: 40em;
+
+  /* 반경과 크기 (design §20) */
+  --radius: 6px;
+  --radius-sm: 4px;
+  --radius-xs: 3px;
+  --btn-h: 52px;
+  --btn-h-sm: 44px;
+  --field-h: 48px;
+  --badge-h: 36px;
+  --touch-min: 44px;
+  --touch-gap: 8px;
+
+  /* 이름 있는 간격 토큰. 이름은 값(px)이다. design §19 결정에 따라 4px/8px 척도로 고치지 않고
+     시안에서 쓰인 값을 그대로 쓴다. 새 간격이 필요하면 여기에 추가하고, CSS에는 px 리터럴을 쓰지 않는다
+     (tests/unit/design-rules.test.ts가 padding·margin·gap·font-size의 리터럴을 검사한다). */
+  --space-2: 2px;
+  --space-3: 3px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-64: 64px;
+  --space-88: 88px;
+  --space-116: 116px;
+  --space-120: 120px;
+
+  /* 값으로 이름 붙인 글자 크기 토큰(역할이 정해진 --fs-hint 등에 맞지 않는 보조 글자). */
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-15: 15px;
+  --fs-15-5: 15.5px;
+  --fs-16: 16px;
+  --fs-19: 19px;
+
+  /* 색: 시안 Hero 그라데이션 끝색(design §10), 인쇄용 검정·흰색(design §15) */
+  --hero-bg-end: #0b2a33;
+  --print-ink: #000000;
+  --print-paper: #ffffff;
+
+  /* 고정 폭(design §10, §13.2, §21) */
+  --rf-card-w: 210px;
+  --rf-job-w: 220px;
+  --nav-w: 230px;
+  --summary-label-w: 140px;
+}
+
+/* 분기 (design §21): 1199px, 1100px, 1023px, 767px. 자바스크립트용 값은 breakpoints.ts. */
+@media (max-width: 1199px) {
+  :root {
+    --fs-card-body: 17.5px;
+  }
+}
+
+@media (max-width: 1100px) {
+  :root {
+    --nav-w: 190px;
+  }
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --gutter: 24px;
+    --section-y: 64px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --gutter: 16px;
+    --section-y: 48px;
+    --fs-body: 16px;
+    --fs-hero-sub: 17px;
+    --fs-status-h1: 23px;
+    --fs-area-title: 21px;
+    --fs-card-title: 22px;
+    --fs-btn: 16px;
+    --card-pad: 16px;
+    --form-section-gap: 12px;
+  }
+}
+
+/* Tailwind 유틸리티(bg-navy-950 등)에서 같은 토큰을 쓰도록 연결한다. */
+@theme inline {
+  --color-navy-950: var(--navy-950);
+  --color-navy-900: var(--navy-900);
+  --color-navy-800: var(--navy-800);
+  --color-teal-700: var(--teal-700);
+  --color-teal-800: var(--teal-800);
+  --color-green-700: var(--green-700);
+  --color-mint: var(--mint);
+  --color-mint-ink: var(--mint-ink);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-field: var(--field);
+  --color-err: var(--err);
+  --color-err-bg: var(--err-bg);
+  --color-need-bg: var(--need-bg);
+  --color-need-bd: var(--need-bd);
+  --color-need-ink: var(--need-ink);
+  --color-soft-bg: var(--soft-bg);
+  --color-soft-bd: var(--soft-bd);
+  --color-soft-ink: var(--soft-ink);
+  --font-sans: 'IBM Plex Sans KR', 'Noto Sans KR', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+}
